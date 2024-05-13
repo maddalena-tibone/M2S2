@@ -1,0 +1,516 @@
+#PLOTTING results from M2S2 fish metabarcoding data analysis 
+library(ggplot2)
+library(wesanderson)
+library(ggtext)
+library(VennDiagram)
+library(forcats)
+library(iNEXT)
+library(vegan)
+install.packages("")
+setwd("C:/Users/G00397779/OneDrive - Atlantic TU/PhD_mermaid/Projects/Surveys/2022_M2S2_TomCrean/bioinformatics")
+
+##Rarefaction analysis and curves for all samples and plot
+data_inext<-read.csv("rarefaction_curve_data_iNEXT.csv")
+#first do the rarefaction analysis and create an iNEXT object
+inext_out<-iNEXT(data_inext, q=0, datatype="incidence_freq", size=NULL, endpoint=NULL, knots=40, se=TRUE, conf=0.95,
+                 nboot=50)
+#give a nice diverse palette for the rarefaction curves
+pal_inext<-c("#2C7865","#90D26D","#0C2D57","#40A2E3","#FF8080","#FFAF45","#FB6D48","#D74B76","#673F69","#6C22A6","#891652")
+#use this script from this website:https://cran.r-project.org/web/packages/iNEXT/vignettes/Introduction.pdf to make the figure manually
+df <- fortify(inext_out, type=1)
+df.point <- df[which(df$Method=="Observed"),]
+df.line <- df[which(df$Method!="Observed"),]
+df.line$Method <- factor(df.line$Method,
+                         c("Rarefaction", "Extrapolation"),
+                         c("Rarefaction", "Extrapolation"))
+df.point$Assemblage<-factor(df.point$Assemblage, levels=c("H1B", "H1A", "H2B", "H2A","H3B","H3A","H4B","H4A","H6B","H7B","eDNA11"))
+df.line$Assemblage<-factor(df.line$Assemblage, levels=c("H1B", "H1A", "H2B", "H2A","H3B","H3A","H4B","H4A","H6B","H7B","eDNA11"))
+#make the actual curves plot
+rarefaction_plot_inext<-ggplot(df, aes(x=x, y=y, colour=Assemblage)) +
+  geom_point(aes(shape=Assemblage), size=5, data=df.point) +
+  geom_line(aes(linetype=Method), lwd=1.5, data=df.line) +
+  geom_ribbon(aes(ymin=y.lwr, ymax=y.upr, fill=Assemblage, colour=NULL), alpha=0.2) +
+  labs(x="Sequencing depth (number of reads)", y="Number of species") +
+  theme(legend.title=element_blank(), text=element_text(size=18), legend.box = "vertical") +
+  scale_colour_manual(values=pal_inext) +
+  scale_fill_manual(values=pal_inext) +
+  guides(fill="none", size="none") +
+  scale_shape_manual(values=c(20,20,20,20,20,20,20,20,20,20,20)) +
+  theme_minimal() +
+  xlim(0, 250000) 
+rarefaction_plot_inext
+
+ggsave("rarefaction_plot_all.png", plot = rarefaction_plot_inext, path = NULL, dpi=300, width = 3000, height = 2000, units = "px", bg = "white", device="png")
+
+##boxplots of the number of reads after different steps 
+reads_info <- read.csv("reads_info_bars.csv")
+pal_box<-wes_palette("Zissou1")
+reads_info$variable<-factor(reads_info$variable, levels=c("Raw","Filtered","Assigned to species","After human removal"))
+reads_boxp<-ggplot(reads_info, aes(x=variable, y=reads, fill=variable)) +
+                    geom_boxplot() +
+                    theme_minimal() +
+                    labs(y="Number of reads", x="Filtering steps") +
+                    scale_x_discrete(limits=c("Raw","Filtered","Assigned to species","After human removal")) +
+                    scale_fill_manual(values=pal_mean_sd) +
+                    guides(fill=guide_legend(title="Filtering steps")) +
+                    scale_y_continuous(labels=scales::comma)
+
+reads_boxp
+ggsave("reads_boxp.png", plot = reads_boxp, path = NULL, dpi=300, width = 1976, height = 1976, units = "px", bg = "white", device="png")
+
+##Barplots of all samples with 4 filtering steps  
+reads_info_cols <- read.csv("reads_info_bars.csv")
+reads_info_cols$variable<-factor(reads_info_cols$variable, levels=c("Raw", "Filtered", "Assigned to species", "After human removal"))
+mutate("variable" = factor(variable, levels=c("Raw", "Filtered", "Assigned to species", "After human removal")))
+separate_bc_reads4<-ggplot(reads_info_cols, aes(x=factor(sample), y=reads, fill=factor(variable))) +
+  geom_col(position=position_dodge2()) +
+  theme_minimal() +
+  scale_fill_manual(values=pal_mean_sd) +
+  scale_x_discrete(limits=c("H1B","H1A","H2B","H2A","H3B","H3A","H4B","H4A","H6B","H7B","eDNA11")) +
+  scale_y_continuous(labels=scales::comma) +
+  labs(fill="Filtering steps", y="Number of reads", x="eDNA sampling points")
+separate_bc_reads
+ggsave("separate_bc_reads4.png", plot = separate_bc_reads, path = NULL, dpi=300, width = 2500, height = 1976, units = "px", bg = "white", device="png")
+
+##Barplots of all samples with 3 filtering steps  
+reads_info_cols <- read.csv("reads_info_bars3.csv")
+reads_info_cols$variable<-factor(reads_info_cols$variable, levels=c("Filtered", "Assigned to species", "After human removal"))
+#mutate("variable" = factor(variable, levels=c("Filtered", "Assigned to species", "After human removal")))
+separate_bc_reads3<-ggplot(reads_info_cols, aes(x=factor(sample), y=reads, fill=factor(variable))) +
+  geom_col(position=position_dodge2(), na.rm=TRUE) +
+  theme_minimal() +
+  scale_fill_manual(values=pal_mean_sd) +
+  scale_x_discrete(limits=c("H1B","H1A","H2B","H2A","H3B","H3A","H4B","H4A","H6B","H7B","eDNA11")) +
+  scale_y_continuous(labels=scales::comma) +
+  labs(fill="Filtering steps", y="Number of reads", x="eDNA sampling points")
+separate_bc_reads3
+ggsave("separate_bc_reads3.png", plot = separate_bc_reads3, path = NULL, dpi=300, width = 2500, height = 1976, units = "px", bg = "white", device="png")
+
+##Barplots of joined samples with error bars
+reads_info_mean_sd <- read.csv("reads_info_mean_sd.csv")
+reads_info_mean_sd$variable<-factor(reads_info_mean_sd$variable, levels=c("Raw", "Filtered", "Assigned to species", "After human removal"))
+all_barcodes_mean_sd<-ggplot(reads_info_mean_sd, aes(x=factor(variable), y=mean, fill=factor(variable)))+
+  geom_col(position="dodge", width=0.7) +
+  geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=0.2, position=position_dodge(0.9))+
+  theme_minimal() +
+  labs(fill="Filtering steps", y="Number of reads", x="Filtering steps") +
+  scale_fill_manual(values=pal_mean_sd) +
+  scale_x_discrete(limits=c("Raw", "Filtered", "Assigned to species", "After human removal")) +
+  scale_y_continuous(labels=scales::comma)
+all_barcodes_mean_sd
+ggsave("all_barcodes_mean_sd.png", plot = all_barcodes_mean_sd, path = NULL, dpi=300, width = 2500, height = 1976, units = "px", bg = "white", device="png")
+
+wes_palette("Darjeeling1")
+pal_mean_sd<-wes_palette("Zissou1", 4, type="continuous")
+
+
+##STACKED BAR PLOTS OF SPECIES FOUND IN EACH LIBRARY
+cool_pal<-c("#550E7A","#8015B7","#CA7FF1","#DBA9F5","#EDD4FA","#DED5F7","#BDACF0","#9B82E8","#401FA7","#0E217A","#1531B7","#7F92F1","#A9B7F5","#CFF6F6","#9EEEED","#6EE5E4","#198F8E","#11605F","#0B633E","#10955C","#62EEB2","#97F3CC","#CBF9E5")
+
+sp_per_haul <- read.csv(file.choose("species_per_haul.csv"))
+
+sp_per_haul_plot <-ggplot(sp_per_haul, aes(fill=species, y=relative_abundance, x=library)) +
+  geom_col(position="stack") +
+  theme_minimal() +
+  labs(y="Relative read abundance (%)", x="Haul/library") +
+  labs(fill="Species") +
+  guides(fill=guide_legend(ncol=1)) +
+  scale_x_discrete(limits=c("H1B", "H1A", "H2B", "H2A", "H3B", "H3A", "H4B", "H4A", "H6B", "H7B", "H8B")) +
+  scale_fill_manual(values = cool_pal)
+
+sp_per_haul_plot
+ggsave("sp_per_haul.png", plot = sp_per_haul_plot, path = NULL, dpi=300, width = 1976, height = 1976, units = "px", bg = "white", device="png")
+
+#plotting the species in barplots excluding human reads
+sp_per_haul_nohum <- read.csv(file.choose("species_per_haul_nohum.csv"))
+cool_pal_noh<-c("#550E7A","#8015B7","#CA7FF1","#DBA9F5","#EDD4FA","#BDACF0","#9B82E8","#401FA7","#0E217A","#1531B7","#7F92F1","#A9B7F5","#CFF6F6","#9EEEED","#6EE5E4","#198F8E","#11605F","#0B633E","#10955C","#62EEB2","#97F3CC")
+sp_per_haul_plot_nohum <-ggplot(sp_per_haul_nohum, aes(fill=species, y=relative_abundance, x=library)) +
+  geom_col(position="stack") +
+  theme_minimal() +
+  labs(y="Relative read abundance (%)", x="eDNA sampling point") +
+  labs(fill="Species") +
+  guides(fill=guide_legend(ncol=1)) +
+  scale_x_discrete(limits=c("H1B", "H1A", "H2B", "H2A", "H3B", "H3A", "H4B", "H4A", "H6B", "H7B", "eDNA11")) +
+  scale_fill_manual(values = cool_pal_noh, labels=c("*Arctozenus risso*", "*Argentina silus*","*Argentina sphyraena*","*Capros aper*","*Cetorhinus maximus*","*Coryphoblennius galerita*","*Echiodon drummondii*","*Helicolenus dactylopterus*","*Lampanyctus macdonaldi*","*Lepidorhombus whiffiagonis*","*Maurolicus muelleri*",
+             "*Melanogrammus aeglefinus*","*Micromesistius poutassou*","*Normichthys operosus*","*Phycis blennoides*","*Protomyctophum arcticum*","*Scomber scombrus*","*Stomias boa*","Unassigned", "Unassigned to species","*Xenodermichthys copei*")) +
+  theme(legend.text = element_markdown())
+sp_per_haul_plot_nohum
+ggsave("sp_per_haul_nohum.png", plot = sp_per_haul_plot_nohum, path = NULL, dpi=300, width = 2200, height = 1976, units = "px", bg = "white", device="png")
+
+
+#plotting the species composition of the hauls in barplots 
+sp_per_haul_catch <- read.csv("Haul_comp_fish_abundance.csv")
+cool_pal_catch<-c("#550E7A","#8015B7","#DBA9F5","#BDACF0","#9B82E8","#401FA7","#0E217A","#1531B7","#7F92F1","#A9B7F5","#9EEEED","#6EE5E4","#198F8E","#11605F","#0B633E","#10955C","#62EEB2")
+sp_per_haul_catch_plot <-ggplot(sp_per_haul_catch, aes(fill=species, y=relative_biomass, x=haul)) +
+  geom_col(position="stack") +
+  theme_minimal() +
+  labs(y="Relative biomass (%)", x="Fishing haul") +
+  labs(fill="Species") +
+  guides(fill=guide_legend(ncol=1)) +
+  scale_x_discrete(limits=c("H1", "H2", "H3", "H4", "H5", "H6", "H7", "H8")) +
+  scale_fill_manual(values = cool_pal_catch, labels=c("*Anguilla anguilla*","*Arctozenus risso*", "*Argentina* spp","*Argyropelecus olfersii*","*Conger conger*","*Echiodon drummondii*","*Electrona risso*","*Gadiculus argenteus*","*Helicolenus dactylopterus*","*Macroparalepis affinis*","*Maurolicus muelleri*",
+                                                      "*Micromesistius poutassou*","*Nansenia groenlandica*","*Protomyctophum arcticum*","*Solea* spp","*Trachurus trachurus*","*Zeugopterus punctatus*")) + 
+  theme(legend.text = element_markdown())
+sp_per_haul_catch_plot
+ggsave("sp_per_haul_catch.png", plot = sp_per_haul_catch_plot, path = NULL, dpi=300, width = 1976, height = 1976, units = "px", bg = "white", device="png")
+
+
+##VENN DIAGRAMS OF eDNA vs HAUL data
+install.packages("ggVennDiagram")
+library(ggVennDiagram)
+install.packages("VennDiagram")
+library(VennDiagram)
+
+##load all information about species found in eDNA samples and the catch, no eDNA was sampled in Haul 5
+eDNA1<-c("Capros aper","Helicolenus dactylopterus","Maurolicus muelleri","Protomyctophum arcticum","Stomias boa")
+haul1<-c("Arctozenus risso","Maurolicus muelleri","Nansenia groenlandica")
+
+eDNA2<-c("Arctozenus risso","Capros aper","Helicolenus dactylopterus","Maurolicus muelleri","Normichthys operosus")
+haul2<-c("Anguilla anguilla","Arctozenus risso","Argyropelecus olfersii","Conger conger","Echiodon drummondii","Helicolenus dactylopterus","Macroparalepis affinis","Maurolicus muelleri","Nansenia groenlandica","Trachurus trachurus")
+  
+eDNA3<-c("Capros aper","Helicolenus dactylopterus","Maurolicus muelleri","Micromesistius poutassou","Phycis blennoides","Xenodermichthys copei")
+haul3<-c("Anguilla anguilla","Arctozenus risso","Conger conger","Macroparalepis affinis","Maurolicus muelleri","Nansenia groenlandica","Solea spp.")
+  
+eDNA4<-c("Argentina silus","Capros aper","Coryphoblennius galerita","Echiodon drummondii","Helicolenus dactylopterus","Maurolicus muelleri","Melanogrammus aeglefinus","Scomber scombrus")
+haul4<-c("Anguilla anguilla","Arctozenus risso","Argentina spp.","Conger conger","Echiodon drummondii","Gadiculus argenteus","Macroparalepis affinis","Maurolicus muelleri","Nansenia groenlandica","Solea spp.","Trachurus trachurus","Zeugopterus punctatus")
+  
+eDNA6<-c("Capros aper","Lampanyctus macdonaldi","Maurolicus muelleri")
+haul6<-c("Anguilla anguilla","Arctozenus risso","Argyropelecus olfersii","Conger conger","Echiodon drummondii","Electrona risso","Macroparalepis affinis","Maurolicus muelleri","Nansenia groenlandica")
+  
+eDNA7<-c("Capros aper","Helicolenus dactylopterus","Maurolicus muelleri")
+haul7<-c("Arctozenus risso","Argyropelecus olfersii","Echiodon drummondii","Helicolenus dactylopterus","Macroparalepis affinis","Maurolicus muelleri","Nansenia groenlandica","Protomyctophum arcticum")
+  
+eDNA8<-c("Argentina silus","Argentina sphyraena","Capros aper","Cetorhinus maximus","Helicolenus dactylopterus","Lepidorhombus whiffiagonis","Maurolicus muelleri","Micromesistius poutassou","Phycis chesteri")
+haul8<-c("Anguilla anguilla","Conger conger","Macroparalepis affinis","Maurolicus muelleri","Micromesistius poutassou","Trachurus trachurus")
+
+eDNA1to7 <- c("Arctozenus risso","Argentina silus","Capros aper","Coryphoblennius galerita","Echiodon drummondii","Helicolenus dactylopterus","Lampanyctus macdonaldi","Maurolicus muelleri","Melanogrammus aeglefinus","Micromesistius poutassou","Normichthys operosus","Phycis chesteri","Protomyctophum arcticum","Scomber scombrus","Stomias boa","Xenodermichthys copei")
+haul1to7 <- c("Anguilla anguilla","Arctozenus risso","Argentina spp.","Argyropelecus olfersii","Conger conger","Echiodon drummondii","Electrona risso","Gadiculus argenteus","Helicolenus dactylopterus","Macroparalepis affinis","Maurolicus muelleri","Nansenia groenlandica","Protomyctophum arcticum","Solea spp.","Trachurus trachurus","Zeugopterus punctatus")
+##building the venn diagrams
+
+#1
+venn.diagram(
+  x=list(eDNA1,haul1),
+  category.names = c("eDNA", "Fishing"),
+  filename = '#1_venn_diagram.png',
+  output=TRUE,
+  imagetype="png",
+  heught = 400 ,
+  width = 3200 ,
+  resolution = 300 ,
+  col=c("#8015B7","#1165A0"),
+  fill = c("#CA7FF1","#6BB9EF"),
+  alpha = 0.30,
+  main = "Haul 1",
+  main.fontface = "bold",
+  main.fontfamily = "serif",
+  main.cex = 3,
+  main.pos = c(0.5,0.9),
+  print.mode=c("raw","percent"),
+  cex = 3,
+  fontfamily = "serif",
+  fontface = "bold",
+  cat.cex = 2.5,
+  cat.fontface = "bold",
+  cat.fontfamily = "serif",
+  cat.default.pos = "outer",
+  cat.pos = c(150, 230),
+  cat.dist = c(0.04, 0.05),
+  inverted = TRUE)
+
+#2
+venn.diagram(
+  x=list(eDNA2,haul2),
+  category.names = c("eDNA", "Fishing"),
+  filename = '#2_venn_diagram.png',
+  output=TRUE,
+  imagetype="png",
+  heught = 400 ,
+  width = 3200 ,
+  resolution = 300 ,
+  col=c("#8015B7","#1165A0"),
+  fill = c("#CA7FF1","#6BB9EF"),
+  alpha = 0.30,
+  main = "Haul 2",
+  main.fontface = "bold",
+  main.fontfamily = "serif",
+  main.cex = 3,
+  main.pos = c(0.5,0.95),
+  print.mode=c("raw","percent"),
+  cex = 3,
+  fontfamily = "serif",
+  fontface = "bold",
+  cat.cex = 2.5,
+  cat.fontface = "bold",
+  cat.fontfamily = "serif",
+  cat.default.pos = "outer",
+  cat.pos = c(210, 140),
+  cat.dist = c(0.03, 0.03))
+
+#3
+venn.diagram(
+  x=list(eDNA3,haul3),
+  category.names = c("eDNA", "Fishing"),
+  filename = '#3_venn_diagram.png',
+  output=TRUE,
+  imagetype="png",
+  heught = 400 ,
+  width = 3300 ,
+  resolution = 300 ,
+  col=c("#8015B7","#1165A0"),
+  fill = c("#CA7FF1","#6BB9EF"),
+  alpha = 0.30,
+  main = "Haul 3",
+  main.fontface = "bold",
+  main.fontfamily = "serif",
+  main.cex = 3,
+  main.pos = c(0.5,0.9),
+  print.mode=c("raw","percent"),
+  cex = 3,
+  fontfamily = "serif",
+  fontface = "bold",
+  cat.cex = 2.5,
+  cat.fontface = "bold",
+  cat.fontfamily = "serif",
+  cat.default.pos = "outer",
+  cat.pos = c(205, 140),
+  cat.dist = c(0.03, 0.05))
+
+#4
+venn.diagram(
+  x=list(eDNA4,haul4),
+  category.names = c("eDNA", "Fishing"),
+  filename = '#4_venn_diagram.png',
+  output=TRUE,
+  imagetype="png",
+  heught = 400 ,
+  width = 3200 ,
+  resolution = 300 ,
+  col=c("#8015B7","#1165A0"),
+  fill = c("#CA7FF1","#6BB9EF"),
+  alpha = 0.30,
+  main = "Haul 4",
+  main.fontface = "bold",
+  main.fontfamily = "serif",
+  main.cex = 3,
+  main.pos = c(0.5,0.9),
+  print.mode=c("raw","percent"),
+  cex = 3,
+  fontfamily = "serif",
+  fontface = "bold",
+  cat.cex = 2.5,
+  cat.fontface = "bold",
+  cat.fontfamily = "serif",
+  cat.default.pos = "outer",
+  cat.pos = c(200, 150),
+  cat.dist = c(0.03, 0.03))
+
+#6
+venn.diagram(
+  x=list(eDNA6,haul6),
+  category.names = c("eDNA", "Fishing"),
+  filename = '#6_venn_diagram.png',
+  output=TRUE,
+  imagetype="png",
+  heught = 400 ,
+  width = 3200 ,
+  resolution = 300 ,
+  col=c("#8015B7","#1165A0"),
+  fill = c("#CA7FF1","#6BB9EF"),
+  alpha = 0.30,
+  main = "Haul 6",
+  main.fontface = "bold",
+  main.fontfamily = "serif",
+  main.cex = 3,
+  main.pos = c(0.5,0.9),
+  print.mode=c("raw","percent"),
+  cex = 3,
+  fontfamily = "serif",
+  fontface = "bold",
+  cat.cex = 2.5,
+  cat.fontface = "bold",
+  cat.fontfamily = "serif",
+  cat.default.pos = "outer",
+  cat.pos = c(200, 145),
+  cat.dist = c(0.02, 0.03))
+
+#7
+venn.diagram(
+  x=list(eDNA7,haul7),
+  category.names = c("eDNA", "Fishing"),
+  filename = '#7_venn_diagram.png',
+  output=TRUE,
+  imagetype="png",
+  heught = 400 ,
+  width = 3200 ,
+  resolution = 300 ,
+  col=c("#8015B7","#1165A0"),
+  fill = c("#CA7FF1","#6BB9EF"),
+  alpha = 0.30,
+  main = "Haul 7",
+  main.fontface = "bold",
+  main.fontfamily = "serif",
+  main.cex = 3,
+  main.pos = c(0.5,0.95),
+  print.mode=c("raw","percent"),
+  cex = 3,
+  fontfamily = "serif",
+  fontface = "bold",
+  cat.cex = 2.5,
+  cat.fontface = "bold",
+  cat.fontfamily = "serif",
+  cat.default.pos = "outer",
+  cat.pos = c(200, 145),
+  cat.dist = c(0.03, 0.03))
+
+#8
+venn.diagram(
+  x=list(eDNA8,haul8),
+  category.names = c("eDNA", "Fishing"),
+  filename = '#8_venn_diagram.png',
+  output=TRUE,
+  imagetype="png",
+  heught = 400 ,
+  width = 3200 ,
+  resolution = 300 ,
+  col=c("#8015B7","#1165A0"),
+  fill = c("#CA7FF1","#6BB9EF"),
+  alpha = 0.30,
+  main = "Haul 8",
+  main.fontface = "bold",
+  main.fontfamily = "serif",
+  main.cex = 3,
+  main.pos = c(0.5,0.9),
+  print.mode=c("raw","percent"),
+  cex = 3,
+  fontfamily = "serif",
+  fontface = "bold",
+  cat.cex = 2.5,
+  cat.fontface = "bold",
+  cat.fontfamily = "serif",
+  cat.default.pos = "outer",
+  cat.pos = c(150, 230),
+  cat.dist = c(0.045, 0.05),
+  inverted = TRUE)
+
+#1 to 7
+venn.diagram(
+  x=list(eDNA1to7,haul1to7),
+  category.names = c("eDNA", "Fishing"),
+  filename = '#1to7_venn_diagram.png',
+  output=TRUE,
+  imagetype="png",
+  heught = 400 ,
+  width = 3200 ,
+  resolution = 300 ,
+  col=c("#8015B7","#1165A0"),
+  fill = c("#CA7FF1","#6BB9EF"),
+  alpha = 0.20,
+  main.fontface = "bold",
+  main.fontfamily = "serif",
+  main.cex = 3,
+  main.pos = c(0.5,0.95),
+  print.mode=c("raw","percent"),
+  cex = 3,
+  fontfamily = "serif",
+  fontface = "bold",
+  cat.cex = 2.5,
+  cat.fontface = "bold",
+  cat.fontfamily = "serif",
+  cat.default.pos = "outer",
+  cat.pos = c(200, 145),
+  cat.dist = c(0.03, 0.03))
+
+##Building Venn diagrams to compare before and after hauls
+H1B<-c("Capros aper","Helicolenus dactylopterus","Maurolicus muelleri","Protomyctophum arcticum")
+H1A<-c("Capros aper","Maurolicus muelleri","Stomias boa")
+H2B<-c("Capros aper","Maurolicus muelleri","Normichthys operosus")
+H2A<-c("Arctozenus risso","Capros aper","Helicolenus dactylopterus","Maurolicus muelleri")
+H3B<-c("Capros aper","Helicolenus dactylopterus","Maurolicus muelleri","Phycis blennoides","Xenodermichthys copei")
+H3A<-c("Capros aper","Helicolenus dactylopterus","Maurolicus muelleri","Micromesistius poutassou","Phycis blennoides","Xenodermichthys copei")
+H4B<-c("Argentina silus","Capros aper","Coryphoblennius galerita","Echiodon drummondii","Helicolenus dactylopterus","Maurolicus muelleri")
+H4A<-c("Capros aper","Helicolenus dactylopterus","Maurolicus muelleri","Melanogrammus aeglefinus","Scomber scombrus")
+
+#Haul 1
+venn.diagram(
+  x=list(H1B,H1A),
+  category.names = c("eDNA before", "eDNA after"),
+  filename = '#H1_before_after_venn.png',
+  output=TRUE, imagetype="png", height =3300 ,
+  width = 3500 ,  resolution = 300 ,
+  col=c("#FB6D48","#673F69"),
+  fill = c("#FFAF45","#D74B76"),
+  alpha = 0.30,
+  main = "Haul 1",  main.fontface = "bold",
+  main.fontfamily = "serif",
+  main.cex = 3,  main.pos = c(0.5,1),
+  print.mode=c("raw","percent"),
+  cex = 3,
+  fontfamily = "serif",  fontface = "bold",
+  cat.cex = 2.5,
+  cat.fontface = "bold",  cat.fontfamily = "serif",  cat.default.pos = "outer",
+  cat.pos = c(220, 150),
+  cat.dist = c(0.04, 0.04))
+
+#Haul 2
+venn.diagram(
+  x=list(H2B,H2A),
+  category.names = c("eDNA before", "eDNA after"),
+  filename = '#H2_before_after_venn.png',
+  output=TRUE, imagetype="png", height =3300 ,
+  width = 3500 ,  resolution = 300 ,
+  col=c("#FB6D48","#673F69"),
+  fill = c("#FFAF45","#D74B76"),
+  alpha = 0.30,
+  main = "Haul 2",  main.fontface = "bold",
+  main.fontfamily = "serif",
+  main.cex = 3,  main.pos = c(0.5,1),
+  print.mode=c("raw","percent"),
+  cex = 3,
+  fontfamily = "serif",  fontface = "bold",
+  cat.cex = 2.5,
+  cat.fontface = "bold",  cat.fontfamily = "serif",  cat.default.pos = "outer",
+  cat.pos = c(140, 210),
+  cat.dist = c(0.04, 0.04),
+  inverted = TRUE)
+
+#Haul 3
+venn.diagram(
+  x=list(H3B,H3A),
+  category.names = c("eDNA before", "eDNA after"),
+  filename = '#H3_before_after_venn.png',
+  output=TRUE, imagetype="png", height = 3500 ,
+  width = 3500 ,  resolution = 300 ,
+  col=c("#FB6D48","#673F69"),
+  fill = c("#FFAF45","#D74B76"),
+  alpha = 0.30,
+  main = "Haul 3",  main.fontface = "bold",
+  main.fontfamily = "serif",
+  main.cex = 3,  main.pos = c(0.5,1.05),
+  print.mode=c("raw","percent"),
+  cex = 3,
+  fontfamily = "serif",  fontface = "bold",
+  cat.cex = 2.5,
+  cat.fontface = "bold",  cat.fontfamily = "serif",  cat.default.pos = "outer",
+  cat.pos = c(220,135),
+  cat.dist = c(0.05, 0.04))
+
+#Haul 4
+venn.diagram(
+  x=list(H4B,H4A),
+  category.names = c("eDNA before", "eDNA after"),
+  filename = '#H4_before_after_venn.png',
+  output=TRUE, imagetype="png", height = 3500 ,
+  width = 3500 ,  resolution = 300 ,
+  col=c("#FB6D48","#673F69"),
+  fill = c("#FFAF45","#D74B76"),
+  alpha = 0.30,
+  main = "Haul 4",  main.fontface = "bold",
+  main.fontfamily = "serif",
+  main.cex = 3,  main.pos = c(0.5,1),
+  print.mode=c("raw","percent"),
+  cex = 3,
+  fontfamily = "serif",  fontface = "bold",
+  cat.cex = 2.5,
+  cat.fontface = "bold",  cat.fontfamily = "serif",  cat.default.pos = "outer",
+  cat.pos = c(220,145),
+  cat.dist = c(0.04, 0.04))
