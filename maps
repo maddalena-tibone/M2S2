@@ -1,0 +1,44 @@
+##Maps M2S2: sites, CTD stations, fishing stations 
+library(ggOceanMaps)
+library(ggOceanMapsData)
+library(ggspatial)
+library(ggplot2)
+library(ggrepel)
+library(ggpubr)
+library(patchwork)
+library(ggtext)
+
+m2s2_CTD_hauls <- read.csv("ctd_haul_coord.csv")
+m2s2_CTD_hauls_tr <- data.frame(m2s2_CTD_hauls,transform_coord(m2s2_CTD_hauls[,c("lon","lat")]))
+  
+#Map with the four sites in different colours, plus CTD stations and haul stations
+coord_sites <- read.csv("coord_sites.csv")
+coord_sites_tr <- data.frame(coord_sites,transform_coord(coord_sites[,c("lon","lat")]))
+site_map<-basemap(limits = c(-14.5, -9.5, 52.5, 55), bathymetry = TRUE) + 
+    geom_point(data = m2s2_CTD_hauls_tr, aes(x = lon.1, y = lat.1), colour="black", size=2.5) +
+    geom_point(data = m2s2_CTD_hauls_tr, aes(x = lon.1, y = lat.1, color = as.factor(Sampling.type)), size = 2) +
+    scale_color_manual(values= c("white","black")) +
+    geom_point(data = coord_sites_tr, aes(x = lon.1, y = lat.1, color=as.factor(Site)), shape=21, color=c("#5E1675", "#EE4266", "#FFD23F","#337357"), size=20, stroke=2) +
+    ggspatial::annotation_scale(location = "br") +
+    labs(color="Sampling type") +
+    geom_richtext(data = coord_sites_tr, aes(x = lon.1-5000, y = lat.1-42000, label=c("**Site 1** <br> 3x fishing <br> 6x eDNA before/after", "**Site 2** <br> 2x fishing <br> 2x eDNA before/after", "**Site 3** <br> 2x fishing <br> 2x eDNA before", "**Site 4** <br> 1x fishing <br> 1x eDNA")), hjust=0.5, vjust=0.5, size=3.5) +
+    labs(x="Longitude", y="Latitude")
+site_map
+ggsave("site_map.png", plot =site_map, path = NULL, dpi=300, width = 2500, height = 2200, units = "px", bg = "white", device="png")
+
+#Map of the larger area (Ireland and NE Atlantic) 
+rect_data <- data.frame(lon=c(-9, -15), lat=c(53,55))
+rect_data_tr<-data.frame(rect_data,transform_coord(rect_data[,c("lon","lat")]))
+label_data <-data.frame(lon=c(-7.5, -13.1), lat=c(53,51))
+label_data_tr<-data.frame(label_data,transform_coord(label_data[,c("lon","lat")]))
+overall_map<-basemap(limits = c(-15, -6, 51, 55), bathymetry = TRUE) +
+  geom_point(data = coord_sites_tr, aes(x = lon.1, y = lat.1, color=as.factor(Site)), color=c("#5E1675", "#EE4266", "#FFD23F","#337357"), size=4) +
+  geom_rect(mapping=aes(xmin=-650812.4, xmax=-1014803.4, ymin=-4103232, ymax=-3796010), color="red", fill="transparent", linewidth=0.5) +
+  theme(legend.position = "none", axis.text.x=element_blank(), axis.text.y=element_blank(), axis.ticks.x=element_blank(), axis.ticks.y=element_blank())+labs(x="",y="") +
+  geom_label(data=label_data_tr, aes(x=lon.1, y=lat.1, label=c("Ireland", "NE Atlantic")), size=3.5)
+overall_map
+
+#Joint map
+final_map <- site_map + inset_element(overall_map, -0.045, -0.086, 0.4, 0.4)
+final_map
+ggsave("m2s2_CTD_haul_map.png", plot =final_map, path = NULL, dpi=300, width = 2500, height = 2000, units = "px", bg = "white", device="png")
