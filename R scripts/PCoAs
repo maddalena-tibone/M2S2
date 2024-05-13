@@ -1,0 +1,315 @@
+
+#M2S2 fish community: comparison between hauls and eDNA
+
+#Packages and functions
+library(tidyverse)
+library(readxl)
+library(worrms)
+library(vegan)
+library(ggrepel)
+multiplesheets <- function(fname) {
+  
+  # getting info about all excel sheets
+  sheets <- readxl::excel_sheets(fname)
+  tibble <- lapply(sheets, function(x) readxl::read_excel(fname, sheet = x))
+  data_frame <- lapply(tibble, as.data.frame)
+  
+  # assigning names to data frames names(data_frame) <- sheets
+  names(data_frame) <- sheets
+  
+  return(data_frame)
+}
+
+setwd("C:/Users/G00397779/OneDrive - Atlantic TU/PhD_mermaid/Projects/Surveys/2022_M2S2_TomCrean/bioinformatics/PCoAs/script")
+
+#Loading hauls data and creating community matrix#####
+
+bio <- multiplesheets("Bio_Data_Thib.xlsx")
+bio$`Hauls Positions`$Haul <- as.factor(bio$`Hauls Positions`$Haul)
+bio$`Hauls Positions`$Date <- as.Date(bio$`Hauls Positions`$Date, format="%d.%m.%y")
+bio$`Hauls Positions`$Hour <- as.character(bio$`Hauls Positions`$Hour)
+
+bio$`Catch`$Haul <- as.factor(bio$`Catch`$Haul)
+bio$`Catch`$Date <- as.Date(bio$`Catch`$Date, format="%d.%m.%y")
+bio$`Catch`$Hour <- as.character(bio$`Catch`$Hour)
+
+Haul_meta <- bio$`Hauls Positions` %>% filter(Status=="START") %>% dplyr::left_join(bio$`Catch`, by=c("Haul","Date","Hour","Long"="Lon","Lat"))
+toto <-ggOceanMaps::transform_coord(Haul_meta)
+names(toto) <- c("Lon_t","Lat_t")
+Haul_meta <- cbind(Haul_meta, toto)
+Haul_meta$Site <- c(1,1,1,2,2,3,3,4)
+
+Bio <- data.frame(
+  Haul = c(rep(bio$Length_freq$Haul,bio$Length_freq$Number),
+           bio$Length_weight$Haul),
+  Sp =   c(rep(bio$Length_freq$Sp,bio$Length_freq$Number),
+           bio$Length_weight$Sp),
+  Size = c(rep(bio$Length_freq$Length,bio$Length_freq$Number),
+           bio$Length_weight$Length)
+)
+
+Bio4 <- bio$Haul_composition
+Bio4$Haul <- factor(Bio4$Haul, levels = c(1:8))
+Bio4 <- Bio4 %>% dplyr::group_by(Haul) %>% mutate(Percentage=Weight/sum(Weight)*100)
+Bio4$Species[Bio4$Species=="Leptocephali A"] <- "Anguilla anguilla"
+Bio4$Species[Bio4$Species=="Leptocephali B"] <- "Conger conger"
+
+
+#Using WORMS website to sort fish from other taxa
+taxa<- wm_records_taxamatch(unique(Bio4$Species), marine_only = TRUE)
+fish <- c(1,2,15)
+for(i in 1:length(taxa)){
+  if(i %in% c(1,2,15)) next
+  if(sum(taxa[[i]]$class=="Teleostei", na.rm=T)==1){
+    fish<-c(fish,i)
+  }}
+
+#Creating community matrix
+Haul.Comm.mat <- Bio4[Bio4$Species %in% unique(Bio4$Species)[fish],]
+Haul.Comm.mat$Species[Haul.Comm.mat$Species=="MAV1"] <- "Maurolicus muelleri"
+Haul.Comm.mat$Species[Haul.Comm.mat$Species=="MAV2"] <- "Maurolicus muelleri"
+
+Haul.Comm.mat <- Haul.Comm.mat %>% dplyr::group_by(Haul) %>% mutate(Percentage=Weight/sum(Weight)*100) %>% ungroup()
+Haul.Comm.mat <- Haul.Comm.mat %>% dplyr::group_by(Haul, Species) %>% mutate(Percentage=sum(Percentage)) %>%
+  ungroup() %>%  dplyr::select(-Weight) %>% distinct()
+
+Haul.Comm.mat <- Haul.Comm.mat %>% tidyr::pivot_wider(id_cols = Haul, 
+                                                      values_from = Percentage,
+                                                      names_from = Species,
+                                                      values_fill = 0)
+
+# eDNA data community
+eDNA_comm <- read.csv("species_per_haul_nohum.csv")
+
+eDNA.Comm.mat <- eDNA_comm %>%  tidyr::pivot_wider(id_cols = library,
+                                                   values_from = relative_abundance,
+                                                   names_from = species, values_fill = 0)
+
+#eDNA.Comm.mat.red <- eDNA_comm %>% dplyr::filter(species != c("Homo sapiens")) %>%
+  dplyr::group_by(library) %>% 
+  mutate(relative_abundance=relative_abundance*(100/sum(relative_abundance)))%>%  
+  tidyr::pivot_wider(id_cols = library,
+                     values_from = relative_abundance,
+                     names_from = species, values_fill = 0)
+
+
+
+
+
+#PCoA on both community matrices#####
+library(ape) 
+Haul_freq <- Haul.Comm.mat[,c(-1)]/100
+eDNA_freq <- eDNA.Comm.mat[-c(10),c(-1)]/100
+
+Hauldist <- vegdist(sqrt(Haul_freq),  method = "chord")
+eDNAdist <- vegdist(sqrt(eDNA_freq),  method = "chord") 
+
+Haul.pcoa <- cmdscale(Hauldist, k=nrow(Haul_freq)-1, eig=T, add=T) 
+eDNA.pcoa <- cmdscale(eDNAdist, k=nrow(eDNA_freq)-1, eig=T, add=T)
+
+
+#PCoA nicer graphs#####
+
+colhaul <- c("#5E1675","#5E1675","#5E1675", "#EE4266","#EE4266", "#FFD23F","#FFD23F", "#337357")
+coledna <- c("#5E1675","#5E1675","#5E1675","#5E1675","#5E1675","#5E1675", "#EE4266","#EE4266", "#FFD23F", "#337357")
+
+#Haul ggplot
+#extracting the site as data frame
+sites = as.data.frame(Haul.pcoa$points)
+rownames(sites) <- c("Haul 1","Haul 2","Haul 3","Haul 4","Haul 5","Haul 6","Haul 7","Haul 8")
+colnames(sites) <- c("PC1","PC2","PC3","PC4","PC5","PC6","PC7")
+sites$color <- c("Site 1","Site 1","Site 1","Site 2","Site 2","Site 3","Site 3","Site 4")
+#extracting the data; species scores
+species =  as.data.frame(wascores(Haul.pcoa$points,Haul_freq))
+colnames(species) <-  c("PC1","PC2","PC3","PC4","PC5","PC6","PC7")
+species_italics_catch <- c("italic('Maurolicus muelleri')","italic('Nansenia groenlandica')","italic('Arctozenus risso')","italic('Trachurus trachurus')","italic('Argyropelecus olfersii')","italic('Helicolenus dactylopterus')",
+                           "italic('Echiodon drummondii')","italic('Macroparalepis affinis')","italic('Anguilla anguilla')","italic('Conger conger')","italic('Solea')~spp.",
+                           "italic('Zeugopterus punctatus')","italic('Argentina')~spp.","italic('Gadiculus argenteus')","italic('Electrona risso')","italic('Protomyctophum arcticum')",
+                           "italic('Micromesistius poutassou')")
+
+
+haul.plot = ggplot() +
+  geom_point(data = species, aes(x = PC1, y = PC2), color = "#A9A9A9") +
+  theme_bw() +
+  geom_segment(data = species, aes(x = 0, y = 0, xend = PC1, yend = PC2), arrow = arrow(length = unit(0.25, "cm")), col="#A9A9A9") +
+  geom_text_repel(data = species, aes(x = PC1, y = PC2, label =  species_italics_catch), color = "#A9A9A9", size = 3, parse=TRUE) +
+  geom_point(data = sites, aes(x = PC1, y = PC2, color = color), size=3)+
+  geom_text_repel(data = sites, aes(x = PC1, y = PC2, label = rownames(sites))) +
+  theme(axis.text = element_text(size =10), axis.title = element_text(size = 10))+
+  ggtitle("PCoA of the catch composition using Hellinger distance matrix")+
+  labs(col="Surveyed area", x="Axis 1 (47%)",  y="Axis 2 (19.7%)")+
+  scale_color_manual(values=c("#5E1675", "#EE4266", "#FFD23F", "#337357"), breaks=c("Site 1","Site 2","Site 3", "Site 4"))
+
+haul.plot
+ggsave("haul_PCoA_trans.png", plot = haul.plot, path = NULL, dpi=300, width = 2500, height = 1976, units = "px", bg = "white", device="png")
+#ggsave("Haul_PCoA.tiff", device = "tiff")
+
+
+#eDNA ggplot
+
+#extracting the site as data frame
+sites = as.data.frame(eDNA.pcoa$points)
+rownames(sites) <- c("H1B","H1A","H2B","H2A","H3B","H3A","H4B","H4A","H6B","CTD 11")
+colnames(sites) <- c("PC1","PC2","PC3","PC4","PC5","PC6","PC7","PC8","PC9")
+sites$color <- c("Site 1","Site 1","Site 1","Site 1","Site 1","Site 1","Site 2","Site 2","Site 3","Site 4")
+#extracting the data; species scores
+species =  as.data.frame(wascores(eDNA.pcoa$points,eDNA_freq))
+colnames(species) <-  c("PC1","PC2","PC3","PC4","PC5","PC6","PC7","PC8","PC9")
+species_italics_eDNA <- c("italic('Arctozenus risso')","italic('Argentina silus')","italic('Argentina sphyraena')","italic('Capros aper')","italic('Cetorhinus maximus')","italic('Coryphoblennius galerita')",
+                     "italic('Echiodon drummondii')","italic('Helicolenus dactylopterus')","italic('Lampanyctus macdonaldi')","italic('Lepidorhombus whiffiagonis')","italic('Maurolicus muelleri')",
+                     "italic('Melanogrammus aeglefinus')","italic('Micromesistius poutassou')","italic('Normichthys operosus')","italic('Phycis blennoides')","italic('Protomyctophum arcticum')",
+                     "italic('Scomber scombrus')","italic('Stomias boa')","italic('Xenodermichthys copei')","Unassigned","Unassigned~to~species")
+
+
+eDNA.plot = ggplot() +
+  geom_point(data = species, aes(x = PC1, y = PC2), color = "#A9A9A9") +
+  theme_bw() +
+  geom_segment(data = species, aes(x = 0, y = 0, xend = PC1, yend = PC2), arrow = arrow(length = unit(0.25, "cm")), col="#A9A9A9") +
+  geom_text_repel(data = species, aes(x = PC1, y = PC2, label =  species_italics_eDNA), color = "#A9A9A9", size = 3, max.overlaps = 15, parse=TRUE) +
+  geom_point(data = sites, aes(x = PC1, y = PC2, color = color), size=3)+
+  geom_text_repel(data = sites, aes(x = PC1, y = PC2, label = rownames(sites))) +
+  theme(axis.text = element_text(size =10), axis.title = element_text(size = 10))+
+  ggtitle("PCoA of the eDNA relative reads abundance using Hellinger distance matrix")+
+  labs(col="Surveyed area", x="Axis 1 (40.6%)",  y="Axis 2 (29.8%)")+
+  scale_color_manual(values=c("#5E1675", "#EE4266", "#FFD23F", "#337357"), breaks=c("Site 1","Site 2","Site 3", "Site 4"))
+
+eDNA.plot
+ggsave("eDNA_PCoA_trans.png", plot = eDNA.plot, path = NULL, dpi=300, width = 2500, height = 1976, units = "px", bg = "white", device="png")
+#ggsave("eDNA_PCoA.tiff", device = "tiff")
+
+
+#PCoA on presence/absence matrices#####
+Haul_freq <- Haul.Comm.mat[,c(-1)]/100
+eDNA_freq <- eDNA.Comm.mat[-c(10),c(-1)]/100
+
+Haul_pres <- Haul_freq
+eDNA_pres <- eDNA_freq
+
+Haul_pres[Haul_pres>0]<-1
+eDNA_pres[eDNA_pres>0]<-1
+
+Hauldist <- vegdist(Haul_pres,  method = "jaccard")
+eDNAdist <- vegdist(eDNA_pres,  method = "jaccard") 
+
+Haul.pcoa <- cmdscale(Hauldist, k=nrow(Haul_freq)-1, eig=T, add=T) 
+eDNA.pcoa <- cmdscale(eDNAdist, k=nrow(eDNA_freq)-1, eig=T, add=T)
+
+#Getting % variance
+Haul.pcoa.cor <- ape::pcoa(Hauldist, correction = "cailliez")
+Haul.pcoa.cor$values$Eigenvalues/sum(Haul.pcoa.cor$values$Eigenvalues)*100
+eDNA.pcoa$eig/sum(eDNA.pcoa$eig)*100
+#PCoA nicer graphs#####
+
+colhaul <- c("#5E1675","#5E1675","#5E1675", "#EE4266","#EE4266", "#FFD23F","#FFD23F", "#337357")
+coledna <- c("#5E1675","#5E1675","#5E1675","#5E1675","#5E1675","#5E1675", "#EE4266","#EE4266", "#FFD23F", "#337357")
+
+#Haul ggplot
+#extracting the site as data frame
+sites = as.data.frame(Haul.pcoa$points)
+rownames(sites) <- c("Haul 1","Haul 2","Haul 3","Haul 4","Haul 5","Haul 6","Haul 7","Haul 8")
+colnames(sites) <- c("PC1","PC2","PC3","PC4","PC5","PC6")
+sites$color <- c("Site 1","Site 1","Site 1","Site 2","Site 2","Site 3","Site 3","Site 4")
+#extracting the data; species scores
+species =  as.data.frame(wascores(Haul.pcoa$points,Haul_freq))
+colnames(species) <-  c("PC1","PC2","PC3","PC4","PC5","PC6")
+
+
+haul.plot.pres.abs = ggplot() +
+  geom_point(data = species, aes(x = PC1, y = PC2), color = "#A9A9A9") +
+  theme_bw() +
+  geom_segment(data = species, aes(x = 0, y = 0, xend = PC1, yend = PC2), arrow = arrow(length = unit(0.25, "cm")), col="#A9A9A9") +
+  geom_text_repel(data = species, aes(x = PC1, y = PC2, label =  species_italics_catch), color = "#A9A9A9", size = 3, parse=TRUE) +
+  geom_point(data = sites, aes(x = PC1, y = PC2, color = color), size=3)+
+  geom_text_repel(data = sites, aes(x = PC1, y = PC2, label = rownames(sites))) +
+  theme(axis.text = element_text(size =10), axis.title = element_text(size = 10))+
+  ggtitle("PCoA of the catch presence/absence data using Jaccard index")+
+  labs(col="Surveyed area", x="Axis 1 (39.5%)",  y="Axis 2 (22.5%)")+
+  scale_color_manual(values=c("#5E1675", "#EE4266", "#FFD23F", "#337357"), breaks=c("Site 1","Site 2","Site 3", "Site 4"))
+
+haul.plot.pres.abs
+ggsave("haul_PCoA_pres_abs.png", plot = haul.plot.pres.abs, path = NULL, dpi=300, width = 2500, height = 1976, units = "px", bg = "white", device="png")
+#ggsave("Haul_PCoA.tiff", device = "tiff")
+
+
+#eDNA ggplot
+
+#extracting the site as data frame
+sites = as.data.frame(eDNA.pcoa$points)
+rownames(sites) <- c("H1B","H1A","H2B","H2A","H3B","H3A","H4B","H4A","H6B","eDNA11")
+colnames(sites) <- c("PC1","PC2","PC3","PC4","PC5","PC6","PC7","PC8","PC9")
+sites$color <- c("Site 1","Site 1","Site 1","Site 1","Site 1","Site 1","Site 2","Site 2","Site 3","Site 4")
+#extracting the data; species scores
+species =  as.data.frame(wascores(eDNA.pcoa$points,eDNA_freq))
+colnames(species) <-  c("PC1","PC2","PC3","PC4","PC5","PC6","PC7","PC8","PC9")
+species_italics_eDNA <- c("italic('Arctozenus risso')","italic('Argentina silus')","italic('Argentina sphyraena')","italic('Capros aper')","italic('Cetorhinus maximus')","italic('Coryphoblennius galerita')",
+                     "italic('Echiodon drummondii')","italic('Helicolenus dactylopterus')","italic('Lampanyctus macdonaldi')","italic('Lepidorhombus whiffiagonis')","italic('Maurolicus muelleri')",
+                     "italic('Melanogrammus aeglefinus')","italic('Micromesistius poutassou')","italic('Normichthys operosus')","italic('Phycis blennoides')","italic('Protomyctophum arcticum')",
+                     "italic('Scomber scombrus')","italic('Stomias boa')","italic('Xenodermichthys copei')","Unassigned","Unassigned~to~species")
+
+eDNA.plot.pres.abs = ggplot() +
+  geom_point(data = species, aes(x = PC1, y = PC2), color = "#A9A9A9") +
+  theme_bw() +
+  geom_segment(data = species, aes(x = 0, y = 0, xend = PC1, yend = PC2), arrow = arrow(length = unit(0.25, "cm")), col="#A9A9A9") +
+  geom_text_repel(data = species, aes(x = PC1, y = PC2, label =  species_italics_eDNA), color = "#A9A9A9", size = 3, max.overlaps = 15, parse=TRUE) +
+  geom_point(data = sites, aes(x = PC1, y = PC2, color = color), size=3)+
+  geom_text_repel(data = sites, aes(x = PC1, y = PC2, label = rownames(sites))) +
+  theme(axis.text = element_text(size =10), axis.title = element_text(size = 10))+
+  ggtitle("PCoA of the eDNA relative reads presence/absence using Jaccard index")+
+  labs(col="Surveyed area", x="Axis 1 (33.2%)",  y="Axis 2 (21.0%)")+
+  scale_color_manual(values=c("#5E1675", "#EE4266", "#FFD23F", "#337357"), breaks=c("Site 1","Site 2","Site 3", "Site 4"))
+  
+
+eDNA.plot.pres.abs
+ggsave("eDNA_PCoA_pres_abs.png", plot = eDNA.plot.pres.abs, path = NULL, dpi=300, width = 2500, height = 1976, units = "px", bg = "white", device="png")
+#ggsave("eDNA_PCoA.tiff", device = "tiff")
+
+
+#Joint community matrix using presence/absence#####
+#Joining matrices
+Haul_pres_long <- Haul_pres %>% dplyr::mutate(Station=paste0("Haul",rownames(Haul_pres))) %>%
+  tidyr::pivot_longer(names_to = "Taxa", values_to = "Presence", cols=c(1:ncol(Haul_pres)))
+
+eDNA_pres_long <- eDNA_pres %>% dplyr::mutate(Station=paste0("CTD",rownames(eDNA_pres))) %>%
+  tidyr::pivot_longer(names_to = "Taxa", values_to = "Presence", cols=c(1:ncol(eDNA_pres)))
+
+Join_comm <- rbind(Haul_pres_long,eDNA_pres_long)
+
+Join_comm <- Join_comm %>% pivot_wider(names_from = "Taxa", values_from = Presence, id_cols = Station, values_fill = 0)
+
+#PCoA
+Join_dist <- vegdist(Join_comm[,-1],  method = "jaccard") 
+
+Join.pcoa <- cmdscale(Join_dist, k=nrow(Join_comm)-1, eig=T, add=T)
+
+colhaul <- c("#5E1675","#5E1675","#5E1675", "#EE4266","#EE4266", "#FFD23F","#FFD23F", "#337357")
+coledna <- c("#5E1675","#5E1675","#5E1675","#5E1675","#5E1675","#5E1675", "#EE4266","#EE4266", "#FFD23F", "#337357")
+
+Join.pcoa$eig/sum(Join.pcoa$eig)*100
+#extracting the site as data frame
+sites = as.data.frame(Join.pcoa$points)
+rownames(sites) <- rownames(Join_comm)
+colnames(sites) <- c("PC1","PC2","PC3","PC4","PC5","PC6","PC7","PC8","PC9","PC10","PC11","PC12","PC13","PC14","PC15","PC16","PC17")
+sites$color <- c("Site 1","Site 1","Site 1","Site 2","Site 2","Site 3","Site 3","Site 4","Site 1","Site 1","Site 1","Site 1","Site 1","Site 1","Site 2","Site 2","Site 3","Site 4")
+#extracting the data; species scores
+species =  as.data.frame(wascores(Join.pcoa$points,Join_comm[,-1]))
+colnames(species) <-  c("PC1","PC2","PC3","PC4","PC5","PC6","PC7","PC8","PC9","PC10","PC11","PC12","PC13","PC14","PC15","PC16","PC17")
+
+
+
+
+
+Joint.plot.pres.abs = ggplot() +
+  #geom_point(data = species, aes(x = PC2, y = PC3), color = "#A9A9A9") +
+  geom_point(data = sites, aes(x = PC2, y = PC3, color = color), size=3)+
+  geom_text_repel(data = sites, aes(x = PC2, y = PC3, label = rownames(sites))) +
+  theme_bw() +
+  #geom_segment(data = species, aes(x = 0, y = 0, xend = PC2,yend = PC3), arrow = arrow(length = unit(0.25, "cm")), col="#A9A9A9") +
+  #geom_text_repel(data = species, aes(x = PC2, y = PC3, label =  rownames(species)), color = "#A9A9A9", size = 3, max.overlaps = 15) +
+  theme(axis.text = element_text(size =10), axis.title = element_text(size = 10))+
+  ggtitle("PCoA of the joint community presence/absence matrix using Jaccard incex")+
+  labs(col="Surveyed area", x="Axis 2 (10.9%)",  y="Axis 3 (9.1%)")+
+  scale_color_manual(values=c("#5E1675", "#EE4266", "#FFD23F", "#337357"), breaks=c("Site 1","Site 2","Site 3", "Site 4"))
+
+Joint.plot.pres.abs
+ggsave("joint_plot_pres_abs.png", plot = Joint.plot.pres.abs, path = NULL, dpi=300, width = 2500, height = 1976, units = "px", bg = "white", device="png")
+#ggsave("Join.plot", device = "tiff")
