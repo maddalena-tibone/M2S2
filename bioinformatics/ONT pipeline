@@ -1,1 +1,36 @@
-add all steps of the bioinformatics processing with description fo each step 
+ONT pipeline starting from demultiplexed data from Mk1C
+
+#1. REMOVE AND TRIM BARCODES 
+guppy_barcoder --print_kits
+#select the relevant kit used during library prep
+guppy_barcoder --input_path /path/to/folder/with/fastq/files --save_path /path/to/output/folder --config configuration.cfg --enable_trim_barcodes --barcode_kits kit_name --records_per_fastq 0 --detect_adapter
+
+#Count raw reads
+grep -c runid ./filename.fastq
+
+#2. REMOVE PRIMERS USING CUTADAPT
+#In the cutadapt command, include the forward primer as is and the rverse complement of the reverse primer
+#Remove primers from the original sequencing files
+cutadapt --cores 8 --untrimmed-output untrimmed.fastq -e 0.1 -a F-primer...RC-R-primer barcode01.fastq -o trimmed-outputs.fastq
+#Create reverse complements of all the sequences that remain untrimmed in untrimmed.fastq
+seqtk seq -r untrimmed.fastq > untrimmed_rc.fastq
+#Repeat the cutadapt command on the reverse complement sequences 
+cutadapt --cores 8 --untrimmed-output untrimmed2.fastq -e 0.1 -a F-primer...RC-R-primer untrimmed_rc.fastq -o trimmed2-outputs.fastq
+#Merge all trimmed sequences into one file
+cat trimmed*.fastq > bc01_trimmed_concatenated.fastq
+#Eliminate all the untrimmed sequences
+rm untrimmed*.fastq | rm trimmed*.fastq
+#Count reads retained after primer trimming
+grep -c runid ./bc01_trimmed_concatenated.fastq
+
+#3. ANALYSIS WITH DECONA 
+#Activate decona environment
+conda activate decona 
+#Change parameters according to study/aims (quality, minimum length, maximum length, multithtreading, kmer length)
+decona -f /path/to/file/ -q 10 -l 550 -m 800 -T 8 -c 0.90 -g -n 5 -r 0.99= -R 500 -k 15 -M
+#Identify the "all_polished_fastas.fasta" file in the multi-seq folder, to be used for taxonomic analysis
+
+
+#4. TAXONOMIC ASSIGNMENT USING BLASTN
+#Use blastn command line command to run the taxonomic assignment, define parameters according to aims/study
+blastn -query /path/to/query/file/all_polished_fastas.fasta -db path/to/db/folder/db_name -out output_file_name -outfmt "6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore" -max_target_seqs 20 -perc_identity 90
