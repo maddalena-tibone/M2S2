@@ -7,16 +7,15 @@ library(forcats)
 library(iNEXT)
 library(vegan)
 install.packages("")
-setwd("C:/Users/G00397779/OneDrive - Atlantic TU/PhD_mermaid/Projects/Surveys/2022_M2S2_TomCrean/bioinformatics")
 
 ##Rarefaction analysis and curves for all samples and plot
 data_inext<-read.csv("rarefaction_curve_data_iNEXT.csv")
 #first do the rarefaction analysis and create an iNEXT object
 inext_out<-iNEXT(data_inext, q=0, datatype="incidence_freq", size=NULL, endpoint=NULL, knots=40, se=TRUE, conf=0.95,
                  nboot=50)
-#give a nice diverse palette for the rarefaction curves
+#Palette for the rarefaction curves
 pal_inext<-c("#2C7865","#90D26D","#0C2D57","#40A2E3","#FF8080","#FFAF45","#FB6D48","#D74B76","#673F69","#6C22A6","#891652")
-#use this script from this website:https://cran.r-project.org/web/packages/iNEXT/vignettes/Introduction.pdf to make the figure manually
+#Create rarefaction curve figure
 df <- fortify(inext_out, type=1)
 df.point <- df[which(df$Method=="Observed"),]
 df.line <- df[which(df$Method!="Observed"),]
@@ -25,7 +24,7 @@ df.line$Method <- factor(df.line$Method,
                          c("Rarefaction", "Extrapolation"))
 df.point$Assemblage<-factor(df.point$Assemblage, levels=c("H1B", "H1A", "H2B", "H2A","H3B","H3A","H4B","H4A","H6B","H7B","eDNA11"))
 df.line$Assemblage<-factor(df.line$Assemblage, levels=c("H1B", "H1A", "H2B", "H2A","H3B","H3A","H4B","H4A","H6B","H7B","eDNA11"))
-#make the actual curves plot
+
 rarefaction_plot_inext<-ggplot(df, aes(x=x, y=y, colour=Assemblage)) +
   geom_point(aes(shape=Assemblage), size=5, data=df.point) +
   geom_line(aes(linetype=Method), lwd=1.5, data=df.line) +
@@ -42,37 +41,8 @@ rarefaction_plot_inext
 
 ggsave("rarefaction_plot_all.png", plot = rarefaction_plot_inext, path = NULL, dpi=300, width = 3000, height = 2000, units = "px", bg = "white", device="png")
 
-##boxplots of the number of reads after different steps 
-reads_info <- read.csv("reads_info_bars.csv")
-pal_box<-wes_palette("Zissou1")
-reads_info$variable<-factor(reads_info$variable, levels=c("Raw","Filtered","Assigned to species","After human removal"))
-reads_boxp<-ggplot(reads_info, aes(x=variable, y=reads, fill=variable)) +
-                    geom_boxplot() +
-                    theme_minimal() +
-                    labs(y="Number of reads", x="Filtering steps") +
-                    scale_x_discrete(limits=c("Raw","Filtered","Assigned to species","After human removal")) +
-                    scale_fill_manual(values=pal_mean_sd) +
-                    guides(fill=guide_legend(title="Filtering steps")) +
-                    scale_y_continuous(labels=scales::comma)
-
-reads_boxp
-ggsave("reads_boxp.png", plot = reads_boxp, path = NULL, dpi=300, width = 1976, height = 1976, units = "px", bg = "white", device="png")
-
-##Barplots of all samples with 4 filtering steps  
-reads_info_cols <- read.csv("reads_info_bars.csv")
-reads_info_cols$variable<-factor(reads_info_cols$variable, levels=c("Raw", "Filtered", "Assigned to species", "After human removal"))
-mutate("variable" = factor(variable, levels=c("Raw", "Filtered", "Assigned to species", "After human removal")))
-separate_bc_reads4<-ggplot(reads_info_cols, aes(x=factor(sample), y=reads, fill=factor(variable))) +
-  geom_col(position=position_dodge2()) +
-  theme_minimal() +
-  scale_fill_manual(values=pal_mean_sd) +
-  scale_x_discrete(limits=c("H1B","H1A","H2B","H2A","H3B","H3A","H4B","H4A","H6B","H7B","eDNA11")) +
-  scale_y_continuous(labels=scales::comma) +
-  labs(fill="Filtering steps", y="Number of reads", x="eDNA sampling points")
-separate_bc_reads
-ggsave("separate_bc_reads4.png", plot = separate_bc_reads, path = NULL, dpi=300, width = 2500, height = 1976, units = "px", bg = "white", device="png")
-
-##Barplots of all samples with 3 filtering steps  
+###Plot information about the sequencing run output
+##Barplots of all samples/barcodes including information of 3 filtering steps  
 reads_info_cols <- read.csv("reads_info_bars3.csv")
 reads_info_cols$variable<-factor(reads_info_cols$variable, levels=c("Filtered", "Assigned to species", "After human removal"))
 #mutate("variable" = factor(variable, levels=c("Filtered", "Assigned to species", "After human removal")))
@@ -86,42 +56,10 @@ separate_bc_reads3<-ggplot(reads_info_cols, aes(x=factor(sample), y=reads, fill=
 separate_bc_reads3
 ggsave("separate_bc_reads3.png", plot = separate_bc_reads3, path = NULL, dpi=300, width = 2500, height = 1976, units = "px", bg = "white", device="png")
 
-##Barplots of joined samples with error bars
-reads_info_mean_sd <- read.csv("reads_info_mean_sd.csv")
-reads_info_mean_sd$variable<-factor(reads_info_mean_sd$variable, levels=c("Raw", "Filtered", "Assigned to species", "After human removal"))
-all_barcodes_mean_sd<-ggplot(reads_info_mean_sd, aes(x=factor(variable), y=mean, fill=factor(variable)))+
-  geom_col(position="dodge", width=0.7) +
-  geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=0.2, position=position_dodge(0.9))+
-  theme_minimal() +
-  labs(fill="Filtering steps", y="Number of reads", x="Filtering steps") +
-  scale_fill_manual(values=pal_mean_sd) +
-  scale_x_discrete(limits=c("Raw", "Filtered", "Assigned to species", "After human removal")) +
-  scale_y_continuous(labels=scales::comma)
-all_barcodes_mean_sd
-ggsave("all_barcodes_mean_sd.png", plot = all_barcodes_mean_sd, path = NULL, dpi=300, width = 2500, height = 1976, units = "px", bg = "white", device="png")
 
-wes_palette("Darjeeling1")
-pal_mean_sd<-wes_palette("Zissou1", 4, type="continuous")
+###Plot results of fishing and eDNA analysis
 
-
-##STACKED BAR PLOTS OF SPECIES FOUND IN EACH LIBRARY
-cool_pal<-c("#550E7A","#8015B7","#CA7FF1","#DBA9F5","#EDD4FA","#DED5F7","#BDACF0","#9B82E8","#401FA7","#0E217A","#1531B7","#7F92F1","#A9B7F5","#CFF6F6","#9EEEED","#6EE5E4","#198F8E","#11605F","#0B633E","#10955C","#62EEB2","#97F3CC","#CBF9E5")
-
-sp_per_haul <- read.csv(file.choose("species_per_haul.csv"))
-
-sp_per_haul_plot <-ggplot(sp_per_haul, aes(fill=species, y=relative_abundance, x=library)) +
-  geom_col(position="stack") +
-  theme_minimal() +
-  labs(y="Relative read abundance (%)", x="Haul/library") +
-  labs(fill="Species") +
-  guides(fill=guide_legend(ncol=1)) +
-  scale_x_discrete(limits=c("H1B", "H1A", "H2B", "H2A", "H3B", "H3A", "H4B", "H4A", "H6B", "H7B", "H8B")) +
-  scale_fill_manual(values = cool_pal)
-
-sp_per_haul_plot
-ggsave("sp_per_haul.png", plot = sp_per_haul_plot, path = NULL, dpi=300, width = 1976, height = 1976, units = "px", bg = "white", device="png")
-
-#plotting the species in barplots excluding human reads
+#Stacked barplot of relative read abundance of species detected in each eDNA sampling point, excluding reads assigned to human
 sp_per_haul_nohum <- read.csv(file.choose("species_per_haul_nohum.csv"))
 cool_pal_noh<-c("#550E7A","#8015B7","#CA7FF1","#DBA9F5","#EDD4FA","#BDACF0","#9B82E8","#401FA7","#0E217A","#1531B7","#7F92F1","#A9B7F5","#CFF6F6","#9EEEED","#6EE5E4","#198F8E","#11605F","#0B633E","#10955C","#62EEB2","#97F3CC")
 sp_per_haul_plot_nohum <-ggplot(sp_per_haul_nohum, aes(fill=species, y=relative_abundance, x=library)) +
@@ -138,7 +76,7 @@ sp_per_haul_plot_nohum
 ggsave("sp_per_haul_nohum.png", plot = sp_per_haul_plot_nohum, path = NULL, dpi=300, width = 2200, height = 1976, units = "px", bg = "white", device="png")
 
 
-#plotting the species composition of the hauls in barplots 
+#Stacked barplots of relative biomass of fish species caught in each hual 
 sp_per_haul_catch <- read.csv("Haul_comp_fish_abundance.csv")
 cool_pal_catch<-c("#550E7A","#8015B7","#DBA9F5","#BDACF0","#9B82E8","#401FA7","#0E217A","#1531B7","#7F92F1","#A9B7F5","#9EEEED","#6EE5E4","#198F8E","#11605F","#0B633E","#10955C","#62EEB2")
 sp_per_haul_catch_plot <-ggplot(sp_per_haul_catch, aes(fill=species, y=relative_biomass, x=haul)) +
@@ -155,13 +93,10 @@ sp_per_haul_catch_plot
 ggsave("sp_per_haul_catch.png", plot = sp_per_haul_catch_plot, path = NULL, dpi=300, width = 1976, height = 1976, units = "px", bg = "white", device="png")
 
 
-##VENN DIAGRAMS OF eDNA vs HAUL data
-install.packages("ggVennDiagram")
-library(ggVennDiagram)
-install.packages("VennDiagram")
+###Venn diagrams comparing species detected with eDNA and fishing
 library(VennDiagram)
 
-##load all information about species found in eDNA samples and the catch, no eDNA was sampled in Haul 5
+#Load  information about species found in eDNA samples and the catch, no eDNA was sampled in Haul 5
 eDNA1<-c("Capros aper","Helicolenus dactylopterus","Maurolicus muelleri","Protomyctophum arcticum","Stomias boa")
 haul1<-c("Arctozenus risso","Maurolicus muelleri","Nansenia groenlandica")
 
@@ -420,7 +355,7 @@ venn.diagram(
   cat.pos = c(200, 145),
   cat.dist = c(0.03, 0.03))
 
-##Building Venn diagrams to compare before and after hauls
+#Venn diagrams comparing species detected with eDNA before and after hauls (Only for hauls 1,2,3,4)
 H1B<-c("Capros aper","Helicolenus dactylopterus","Maurolicus muelleri","Protomyctophum arcticum")
 H1A<-c("Capros aper","Maurolicus muelleri","Stomias boa")
 H2B<-c("Capros aper","Maurolicus muelleri","Normichthys operosus")
@@ -514,3 +449,21 @@ venn.diagram(
   cat.fontface = "bold",  cat.fontfamily = "serif",  cat.default.pos = "outer",
   cat.pos = c(220,145),
   cat.dist = c(0.04, 0.04))
+
+###Building heatmap with fishing and eDNA data 
+data_bubbles<-read.csv("species_bubble_plot.csv")
+heat_log_percentage_opp<-ggplot(data_bubbles, aes(x=Sampling_point, y=Species, fill=size_log)) +
+  geom_tile() +
+  scale_fill_gradient(low="white", high="#11605F", name="log transformed \n %reads/biomass", ) +
+  scale_x_discrete(limits=c("H1B","Haul 1","H1A","H2B","Haul 2","H2A","H3B","Haul 3","H3A", "H4B","Haul 4","H4A","H6B","Haul 6","H7B","Haul 7")) +
+  scale_y_discrete(limits=c("Stomias boa","Coryphoblennius galerita","Melanogrammus aeglefinus","Lampanyctus macdonaldi","Scomber scombrus","Micromesistius poutassou","Phycis blennoides","Normichthys operosus","Argentina silus","Xenodermichthys copei","Capros aper",
+                            "Argentina spp.","Electrona risso","Gadiculus argenteus","Zeugopterus punctatus","Solea spp.","Argyropelecus olfersii","Nansenia groenlandica","Macroparalepis affinis","Trachurus trachurus","Conger conger","Anguilla anguilla",
+                            "Protomyctophum arcticum","Echiodon drummondii","Arctozenus risso","Helicolenus dactylopterus","Maurolicus muelleri")) +
+  theme_minimal(base_size = 13)+
+  theme(legend.title=element_text(size=11)) +
+  annotate("rect", xmin=c(0.5,3.5,6.5,9.5,12.5,14.5), xmax=c(3.5,6.5,9.5,12.5,14.5,16.5), ymin=c(0.4,0.4,0.4,0.4,0.4,0.4), ymax=c(27.7,27.7,27.7,27.7,27.7,27.7), fill="NA", colour="#11605F") +
+  annotate("segment", x=c(1.5,2.5,4.5,5.5,7.5,8.5,10.5,11.5,13.5,15.5), xend=c(1.5,2.5,4.5,5.5,7.5,8.5,10.5,11.5,13.5,15.5), y=c(0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4), yend=c(27.7,27.7,27.7,27.7,27.7,27.7,27.7,27.7,27.7,27.7), colour="#A9A9A9") +
+  theme(axis.text.y=element_text(face="italic")) +
+  labs(x="eDNA and fishing sampling points")
+heat_log_percentage_opp
+ggsave("heat_log_percentage_opp.png", plot = heat_log_percentage_opp, path = NULL, dpi=300, width = 3000, height = 1976, units = "px", bg = "white", device="png")
