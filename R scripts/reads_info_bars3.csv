@@ -1,0 +1,34 @@
+﻿sample,variable,reads
+H1B,Filtered,126196
+H1A,Filtered,147197
+H2B,Filtered,80224
+H2A,Filtered,151172
+H3B,Filtered,104510
+H3A,Filtered,147744
+H4B,Filtered,116829
+H4A,Filtered,130124
+H6B,Filtered,100704
+H7B,Filtered,42781
+eDNA11,Filtered,222880
+H1B,Assigned to species,105655
+H1A,Assigned to species,125608
+H2B,Assigned to species,52544
+H2A,Assigned to species,125651
+H3B,Assigned to species,81484
+H3A,Assigned to species,125870
+H4B,Assigned to species,95714
+H4A,Assigned to species,106300
+H6B,Assigned to species,84415
+H7B,Assigned to species,22005
+eDNA11,Assigned to species,163263
+H1B,After human removal,83531
+H1A,After human removal,78938
+H2B,After human removal,36036
+H2A,After human removal,118116
+H3B,After human removal,57191
+H3A,After human removal,121043
+H4B,After human removal,94922
+H4A,After human removal,103770
+H6B,After human removal,80878
+H7B,After human removal,98
+eDNA11,After human removal,125714

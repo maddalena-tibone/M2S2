@@ -1,0 +1,481 @@
+﻿Sampling_point,Species,Size,Size_class,Size2,size_log,type
+H1B,Anguilla anguilla,0,0,0,0,eDNA
+H1B,Arctozenus risso,0,0,0,0,eDNA
+H1B,Argentina silus,0,0,0,0,eDNA
+H1B,Argentina sphyraena,0,0,0,0,eDNA
+H1B,Argentina spp.,0,0,0,0,eDNA
+H1B,Argyropelecus olfersii,0,0,0,0,eDNA
+H1B,Capros aper,0.01,<1%,1,0.004321374,eDNA
+H1B,Cetorhinus maximus,0,0,0,0,eDNA
+H1B,Conger conger,0,0,0,0,eDNA
+H1B,Coryphoblennius galerita,0,0,0,0,eDNA
+H1B,Echiodon drummondii,0,0,0,0,eDNA
+H1B,Electrona risso,0,0,0,0,eDNA
+H1B,Gadiculus argenteus,0,0,0,0,eDNA
+H1B,Helicolenus dactylopterus,0.01,<1%,1,0.004321374,eDNA
+H1B,Lampanyctus macdonaldi,0,0,0,0,eDNA
+H1B,Lepidorhombus whiffiagonis,0,0,0,0,eDNA
+H1B,Macroparalepis affinis,0,0,0,0,eDNA
+H1B,Maurolicus muelleri,97.47,>90%,100,1.993303938,eDNA
+H1B,Melanogrammus aeglefinus,0,0,0,0,eDNA
+H1B,Micromesistius poutassou,0,0,0,0,eDNA
+H1B,Nansenia groenlandica,0,0,0,0,eDNA
+H1B,Normichthys operosus,0,0,0,0,eDNA
+H1B,Phycis blennoides,0,0,0,0,eDNA
+H1B,Protomyctophum arcticum,0.22,<1%,1,0.086359831,eDNA
+H1B,Scomber scombrus,0,0,0,0,eDNA
+H1B,Solea spp.,0,0,0,0,eDNA
+H1B,Stomias boa,0,0,0,0,eDNA
+H1B,Trachurus trachurus,0,0,0,0,eDNA
+H1B,Xenodermichthys copei,0,0,0,0,eDNA
+H1B,Zeugopterus punctatus,0,0,0,0,eDNA
+Haul 1,Anguilla anguilla,0,0,0,0,Fishing
+Haul 1,Arctozenus risso,0.005,<1%,1,0.002166062,Fishing
+Haul 1,Argentina silus,0,0,0,0,Fishing
+Haul 1,Argentina sphyraena,0,0,0,0,Fishing
+Haul 1,Argentina spp.,0,0,0,0,Fishing
+Haul 1,Argyropelecus olfersii,0,0,0,0,Fishing
+Haul 1,Capros aper,0,0,0,0,Fishing
+Haul 1,Cetorhinus maximus,0,0,0,0,Fishing
+Haul 1,Conger conger,0,0,0,0,Fishing
+Haul 1,Coryphoblennius galerita,0,0,0,0,Fishing
+Haul 1,Echiodon drummondii,0,0,0,0,Fishing
+Haul 1,Electrona risso,0,0,0,0,Fishing
+Haul 1,Gadiculus argenteus,0,0,0,0,Fishing
+Haul 1,Helicolenus dactylopterus,0,0,0,0,Fishing
+Haul 1,Lampanyctus macdonaldi,0,0,0,0,Fishing
+Haul 1,Lepidorhombus whiffiagonis,0,0,0,0,Fishing
+Haul 1,Macroparalepis affinis,0,0,0,0,Fishing
+Haul 1,Maurolicus muelleri,99.979,>90%,100,2.004231066,Fishing
+Haul 1,Melanogrammus aeglefinus,0,0,0,0,Fishing
+Haul 1,Micromesistius poutassou,0,0,0,0,Fishing
+Haul 1,Nansenia groenlandica,0.015,<1%,1,0.006466042,Fishing
+Haul 1,Normichthys operosus,0,0,0,0,Fishing
+Haul 1,Phycis blennoides,0,0,0,0,Fishing
+Haul 1,Protomyctophum arcticum,0,0,0,0,Fishing
+Haul 1,Scomber scombrus,0,0,0,0,Fishing
+Haul 1,Solea spp.,0,0,0,0,Fishing
+Haul 1,Stomias boa,0,0,0,0,Fishing
+Haul 1,Trachurus trachurus,0,0,0,0,Fishing
+Haul 1,Xenodermichthys copei,0,0,0,0,Fishing
+Haul 1,Zeugopterus punctatus,0,0,0,0,Fishing
+H1A,Anguilla anguilla,0,0,0,0,eDNA
+H1A,Arctozenus risso,0,0,0,0,eDNA
+H1A,Argentina silus,0,0,0,0,eDNA
+H1A,Argentina sphyraena,0,0,0,0,eDNA
+H1A,Argentina spp.,0,0,0,0,eDNA
+H1A,Argyropelecus olfersii,0,0,0,0,eDNA
+H1A,Capros aper,0.01,<1%,1,0.004321374,eDNA
+H1A,Cetorhinus maximus,0,0,0,0,eDNA
+H1A,Conger conger,0,0,0,0,eDNA
+H1A,Coryphoblennius galerita,0,0,0,0,eDNA
+H1A,Echiodon drummondii,0,0,0,0,eDNA
+H1A,Electrona risso,0,0,0,0,eDNA
+H1A,Gadiculus argenteus,0,0,0,0,eDNA
+H1A,Helicolenus dactylopterus,0,0,0,0,eDNA
+H1A,Lampanyctus macdonaldi,0,0,0,0,eDNA
+H1A,Lepidorhombus whiffiagonis,0,0,0,0,eDNA
+H1A,Macroparalepis affinis,0,0,0,0,eDNA
+H1A,Maurolicus muelleri,97.67,>90%,100,1.994185128,eDNA
+H1A,Melanogrammus aeglefinus,0,0,0,0,eDNA
+H1A,Micromesistius poutassou,0,0,0,0,eDNA
+H1A,Nansenia groenlandica,0,0,0,0,eDNA
+H1A,Normichthys operosus,0,0,0,0,eDNA
+H1A,Phycis blennoides,0,0,0,0,eDNA
+H1A,Protomyctophum arcticum,0,0,0,0,eDNA
+H1A,Scomber scombrus,0,0,0,0,eDNA
+H1A,Solea spp.,0,0,0,0,eDNA
+H1A,Stomias boa,0.01,<1%,1,0.004321374,eDNA
+H1A,Trachurus trachurus,0,0,0,0,eDNA
+H1A,Xenodermichthys copei,2.03,1-5%,5,0.481442629,eDNA
+H1A,Zeugopterus punctatus,0,0,0,0,eDNA
+H2B,Anguilla anguilla,0,0,0,0,eDNA
+H2B,Arctozenus risso,0,0,0,0,eDNA
+H2B,Argentina silus,0,0,0,0,eDNA
+H2B,Argentina sphyraena,0,0,0,0,eDNA
+H2B,Argentina spp.,0,0,0,0,eDNA
+H2B,Argyropelecus olfersii,0,0,0,0,eDNA
+H2B,Capros aper,0.01,<1%,1,0.004321374,eDNA
+H2B,Cetorhinus maximus,0,0,0,0,eDNA
+H2B,Conger conger,0,0,0,0,eDNA
+H2B,Coryphoblennius galerita,0,0,0,0,eDNA
+H2B,Echiodon drummondii,0,0,0,0,eDNA
+H2B,Electrona risso,0,0,0,0,eDNA
+H2B,Gadiculus argenteus,0,0,0,0,eDNA
+H2B,Helicolenus dactylopterus,0,0,0,0,eDNA
+H2B,Lampanyctus macdonaldi,0,0,0,0,eDNA
+H2B,Lepidorhombus whiffiagonis,0,0,0,0,eDNA
+H2B,Macroparalepis affinis,0,0,0,0,eDNA
+H2B,Maurolicus muelleri,70.45,50-90%,90,1.854002233,eDNA
+H2B,Melanogrammus aeglefinus,0,0,0,0,eDNA
+H2B,Micromesistius poutassou,0,0,0,0,eDNA
+H2B,Nansenia groenlandica,0,0,0,0,eDNA
+H2B,Normichthys operosus,2.74,1-5%,5,0.572871602,eDNA
+H2B,Phycis blennoides,0,0,0,0,eDNA
+H2B,Protomyctophum arcticum,0,0,0,0,eDNA
+H2B,Scomber scombrus,0,0,0,0,eDNA
+H2B,Solea spp.,0,0,0,0,eDNA
+H2B,Stomias boa,0,0,0,0,eDNA
+H2B,Trachurus trachurus,0,0,0,0,eDNA
+H2B,Xenodermichthys copei,0,0,0,0,eDNA
+H2B,Zeugopterus punctatus,0,0,0,0,eDNA
+Haul 2,Anguilla anguilla,1.939,1-5%,5,0.468199586,Fishing
+Haul 2,Arctozenus risso,1.251,1-5%,5,0.352375495,Fishing
+Haul 2,Argentina silus,0,0,0,0,Fishing
+Haul 2,Argentina sphyraena,0,0,0,0,Fishing
+Haul 2,Argentina spp.,0,0,0,0,Fishing
+Haul 2,Argyropelecus olfersii,1.626,1-5%,5,0.419294722,Fishing
+Haul 2,Capros aper,0,0,0,0,Fishing
+Haul 2,Cetorhinus maximus,0,0,0,0,Fishing
+Haul 2,Conger conger,3.503,1-5%,5,0.653501947,Fishing
+Haul 2,Coryphoblennius galerita,0,0,0,0,Fishing
+Haul 2,Echiodon drummondii,0.097,<1%,1,0.040206628,Fishing
+Haul 2,Electrona risso,0,0,0,0,Fishing
+Haul 2,Gadiculus argenteus,0,0,0,0,Fishing
+Haul 2,Helicolenus dactylopterus,0.019,<1%,1,0.008174184,Fishing
+Haul 2,Lampanyctus macdonaldi,0,0,0,0,Fishing
+Haul 2,Lepidorhombus whiffiagonis,0,0,0,0,Fishing
+Haul 2,Macroparalepis affinis,0.25,<1%,1,0.096910013,Fishing
+Haul 2,Maurolicus muelleri,85.499,50-90%,90,1.937011087,Fishing
+Haul 2,Melanogrammus aeglefinus,0,0,0,0,Fishing
+Haul 2,Micromesistius poutassou,0,0,0,0,Fishing
+Haul 2,Nansenia groenlandica,2.439,1-5%,5,0.536432176,Fishing
+Haul 2,Normichthys operosus,0,0,0,0,Fishing
+Haul 2,Phycis blennoides,0,0,0,0,Fishing
+Haul 2,Protomyctophum arcticum,0,0,0,0,Fishing
+Haul 2,Scomber scombrus,0,0,0,0,Fishing
+Haul 2,Solea spp.,0,0,0,0,Fishing
+Haul 2,Stomias boa,0,0,0,0,Fishing
+Haul 2,Trachurus trachurus,3.377,1-5%,5,0.641176547,Fishing
+Haul 2,Xenodermichthys copei,0,0,0,0,Fishing
+Haul 2,Zeugopterus punctatus,0,0,0,0,Fishing
+H2A,Anguilla anguilla,0,0,0,0,eDNA
+H2A,Arctozenus risso,0.38,<1%,1,0.139879086,eDNA
+H2A,Argentina silus,0,0,0,0,eDNA
+H2A,Argentina sphyraena,0,0,0,0,eDNA
+H2A,Argentina spp.,0,0,0,0,eDNA
+H2A,Argyropelecus olfersii,0,0,0,0,eDNA
+H2A,Capros aper,0.01,<1%,1,0.004321374,eDNA
+H2A,Cetorhinus maximus,0,0,0,0,eDNA
+H2A,Conger conger,0,0,0,0,eDNA
+H2A,Coryphoblennius galerita,0,0,0,0,eDNA
+H2A,Echiodon drummondii,0,0,0,0,eDNA
+H2A,Electrona risso,0,0,0,0,eDNA
+H2A,Gadiculus argenteus,0,0,0,0,eDNA
+H2A,Helicolenus dactylopterus,0.25,<1%,1,0.096910013,eDNA
+H2A,Lampanyctus macdonaldi,0,0,0,0,eDNA
+H2A,Lepidorhombus whiffiagonis,0,0,0,0,eDNA
+H2A,Macroparalepis affinis,0,0,0,0,eDNA
+H2A,Maurolicus muelleri,95.47,>90%,100,1.984392279,eDNA
+H2A,Melanogrammus aeglefinus,0,0,0,0,eDNA
+H2A,Micromesistius poutassou,0,0,0,0,eDNA
+H2A,Nansenia groenlandica,0,0,0,0,eDNA
+H2A,Normichthys operosus,0,0,0,0,eDNA
+H2A,Phycis blennoides,0,0,0,0,eDNA
+H2A,Protomyctophum arcticum,0,0,0,0,eDNA
+H2A,Scomber scombrus,0,0,0,0,eDNA
+H2A,Solea spp.,0,0,0,0,eDNA
+H2A,Stomias boa,0,0,0,0,eDNA
+H2A,Trachurus trachurus,0,0,0,0,eDNA
+H2A,Xenodermichthys copei,0,0,0,0,eDNA
+H2A,Zeugopterus punctatus,0,0,0,0,eDNA
+H3B,Anguilla anguilla,0,0,0,0,eDNA
+H3B,Arctozenus risso,0,0,0,0,eDNA
+H3B,Argentina silus,0,0,0,0,eDNA
+H3B,Argentina sphyraena,0,0,0,0,eDNA
+H3B,Argentina spp.,0,0,0,0,eDNA
+H3B,Argyropelecus olfersii,0,0,0,0,eDNA
+H3B,Capros aper,0.03,<1%,1,0.012837225,eDNA
+H3B,Cetorhinus maximus,0,0,0,0,eDNA
+H3B,Conger conger,0,0,0,0,eDNA
+H3B,Coryphoblennius galerita,0,0,0,0,eDNA
+H3B,Echiodon drummondii,0,0,0,0,eDNA
+H3B,Electrona risso,0,0,0,0,eDNA
+H3B,Gadiculus argenteus,0,0,0,0,eDNA
+H3B,Helicolenus dactylopterus,0.02,<1%,1,0.008600172,eDNA
+H3B,Lampanyctus macdonaldi,0,0,0,0,eDNA
+H3B,Lepidorhombus whiffiagonis,0,0,0,0,eDNA
+H3B,Macroparalepis affinis,0,0,0,0,eDNA
+H3B,Maurolicus muelleri,63.43,50-90%,90,1.809088131,eDNA
+H3B,Melanogrammus aeglefinus,0,0,0,0,eDNA
+H3B,Micromesistius poutassou,0,0,0,0,eDNA
+H3B,Nansenia groenlandica,0,0,0,0,eDNA
+H3B,Normichthys operosus,0,0,0,0,eDNA
+H3B,Phycis blennoides,8.38,5-10%,10,0.972202838,eDNA
+H3B,Protomyctophum arcticum,0,0,0,0,eDNA
+H3B,Scomber scombrus,0,0,0,0,eDNA
+H3B,Solea spp.,0,0,0,0,eDNA
+H3B,Stomias boa,0,0,0,0,eDNA
+H3B,Trachurus trachurus,0,0,0,0,eDNA
+H3B,Xenodermichthys copei,20.42,10-50%,50,1.330819466,eDNA
+H3B,Zeugopterus punctatus,0,0,0,0,eDNA
+Haul 3,Anguilla anguilla,0.047,<1%,1,0.019946682,Fishing
+Haul 3,Arctozenus risso,0.005,<1%,1,0.002166062,Fishing
+Haul 3,Argentina silus,0,0,0,0,Fishing
+Haul 3,Argentina sphyraena,0,0,0,0,Fishing
+Haul 3,Argentina spp.,0,0,0,0,Fishing
+Haul 3,Argyropelecus olfersii,0,0,0,0,Fishing
+Haul 3,Capros aper,0,0,0,0,Fishing
+Haul 3,Cetorhinus maximus,0,0,0,0,Fishing
+Haul 3,Conger conger,0.044,<1%,1,0.018700499,Fishing
+Haul 3,Coryphoblennius galerita,0,0,0,0,Fishing
+Haul 3,Echiodon drummondii,0,0,0,0,Fishing
+Haul 3,Electrona risso,0,0,0,0,Fishing
+Haul 3,Gadiculus argenteus,0,0,0,0,Fishing
+Haul 3,Helicolenus dactylopterus,0,0,0,0,Fishing
+Haul 3,Lampanyctus macdonaldi,0,0,0,0,Fishing
+Haul 3,Lepidorhombus whiffiagonis,0,0,0,0,Fishing
+Haul 3,Macroparalepis affinis,0.001,<1%,1,0.000434077,Fishing
+Haul 3,Maurolicus muelleri,99.822,>90%,100,2.003555308,Fishing
+Haul 3,Melanogrammus aeglefinus,0,0,0,0,Fishing
+Haul 3,Micromesistius poutassou,0,0,0,0,Fishing
+Haul 3,Nansenia groenlandica,0.08,<1%,1,0.033423755,Fishing
+Haul 3,Normichthys operosus,0,0,0,0,Fishing
+Haul 3,Phycis blennoides,0,0,0,0,Fishing
+Haul 3,Protomyctophum arcticum,0,0,0,0,Fishing
+Haul 3,Scomber scombrus,0,0,0,0,Fishing
+Haul 3,Solea spp.,0.001,<1%,1,0.000434077,Fishing
+Haul 3,Stomias boa,0,0,0,0,Fishing
+Haul 3,Trachurus trachurus,0,0,0,0,Fishing
+Haul 3,Xenodermichthys copei,0,0,0,0,Fishing
+Haul 3,Zeugopterus punctatus,0,0,0,0,Fishing
+H3A,Anguilla anguilla,0,0,0,0,eDNA
+H3A,Arctozenus risso,0,0,0,0,eDNA
+H3A,Argentina silus,0,0,0,0,eDNA
+H3A,Argentina sphyraena,0,0,0,0,eDNA
+H3A,Argentina spp.,0,0,0,0,eDNA
+H3A,Argyropelecus olfersii,0,0,0,0,eDNA
+H3A,Capros aper,0.01,<1%,1,0.004321374,eDNA
+H3A,Cetorhinus maximus,0,0,0,0,eDNA
+H3A,Conger conger,0,0,0,0,eDNA
+H3A,Coryphoblennius galerita,0,0,0,0,eDNA
+H3A,Echiodon drummondii,0,0,0,0,eDNA
+H3A,Electrona risso,0,0,0,0,eDNA
+H3A,Gadiculus argenteus,0,0,0,0,eDNA
+H3A,Helicolenus dactylopterus,0,0,0,0,eDNA
+H3A,Lampanyctus macdonaldi,0,0,0,0,eDNA
+H3A,Lepidorhombus whiffiagonis,0,0,0,0,eDNA
+H3A,Macroparalepis affinis,0,0,0,0,eDNA
+H3A,Maurolicus muelleri,97.22,>90%,100,1.99219993,eDNA
+H3A,Melanogrammus aeglefinus,0,0,0,0,eDNA
+H3A,Micromesistius poutassou,0.01,<1%,1,0.004321374,eDNA
+H3A,Nansenia groenlandica,0,0,0,0,eDNA
+H3A,Normichthys operosus,0,0,0,0,eDNA
+H3A,Phycis blennoides,0.57,<1%,1,0.195899652,eDNA
+H3A,Protomyctophum arcticum,0,0,0,0,eDNA
+H3A,Scomber scombrus,0,0,0,0,eDNA
+H3A,Solea spp.,0,0,0,0,eDNA
+H3A,Stomias boa,0,0,0,0,eDNA
+H3A,Trachurus trachurus,0,0,0,0,eDNA
+H3A,Xenodermichthys copei,0.6,<1%,1,0.204119983,eDNA
+H3A,Zeugopterus punctatus,0,0,0,0,eDNA
+H4B,Anguilla anguilla,0,0,0,0,eDNA
+H4B,Arctozenus risso,0,0,0,0,eDNA
+H4B,Argentina silus,0.05,<1%,1,0.021189299,eDNA
+H4B,Argentina sphyraena,0,0,0,0,eDNA
+H4B,Argentina spp.,0,0,0,0,eDNA
+H4B,Argyropelecus olfersii,0,0,0,0,eDNA
+H4B,Capros aper,37.5,10-50%,50,1.58546073,eDNA
+H4B,Cetorhinus maximus,0,0,0,0,eDNA
+H4B,Conger conger,0,0,0,0,eDNA
+H4B,Coryphoblennius galerita,0.14,<1%,1,0.056904851,eDNA
+H4B,Echiodon drummondii,1.68,1-5%,5,0.428134794,eDNA
+H4B,Electrona risso,0,0,0,0,eDNA
+H4B,Gadiculus argenteus,0,0,0,0,eDNA
+H4B,Helicolenus dactylopterus,0.84,<1%,1,0.264817823,eDNA
+H4B,Lampanyctus macdonaldi,0,0,0,0,eDNA
+H4B,Lepidorhombus whiffiagonis,0,0,0,0,eDNA
+H4B,Macroparalepis affinis,0,0,0,0,eDNA
+H4B,Maurolicus muelleri,56.78,50-90%,90,1.761777538,eDNA
+H4B,Melanogrammus aeglefinus,0,0,0,0,eDNA
+H4B,Micromesistius poutassou,0,0,0,0,eDNA
+H4B,Nansenia groenlandica,0,0,0,0,eDNA
+H4B,Normichthys operosus,0,0,0,0,eDNA
+H4B,Phycis blennoides,0,0,0,0,eDNA
+H4B,Protomyctophum arcticum,0,0,0,0,eDNA
+H4B,Scomber scombrus,0,0,0,0,eDNA
+H4B,Solea spp.,0,0,0,0,eDNA
+H4B,Stomias boa,0,0,0,0,eDNA
+H4B,Trachurus trachurus,0,0,0,0,eDNA
+H4B,Xenodermichthys copei,0,0,0,0,eDNA
+H4B,Zeugopterus punctatus,0,0,0,0,eDNA
+Haul 4,Anguilla anguilla,5.911,5-10%,10,0.839540893,Fishing
+Haul 4,Arctozenus risso,0.045,<1%,1,0.01911629,Fishing
+Haul 4,Argentina silus,0.009,<1%,1,0.003891166,Fishing
+Haul 4,Argentina sphyraena,0,0,0,0,Fishing
+Haul 4,Argentina spp.,0,0,0,0,Fishing
+Haul 4,Argyropelecus olfersii,0,0,0,0,Fishing
+Haul 4,Capros aper,0,0,0,0,Fishing
+Haul 4,Cetorhinus maximus,0,0,0,0,Fishing
+Haul 4,Conger conger,0.041,<1%,1,0.01745073,Fishing
+Haul 4,Coryphoblennius galerita,0,0,0,0,Fishing
+Haul 4,Echiodon drummondii,0.091,<1%,1,0.037824751,Fishing
+Haul 4,Electrona risso,0,0,0,0,Fishing
+Haul 4,Gadiculus argenteus,0.023,<1%,1,0.009875634,Fishing
+Haul 4,Helicolenus dactylopterus,0,0,0,0,Fishing
+Haul 4,Lampanyctus macdonaldi,0,0,0,0,Fishing
+Haul 4,Lepidorhombus whiffiagonis,0,0,0,0,Fishing
+Haul 4,Macroparalepis affinis,0.318,<1%,1,0.11991541,Fishing
+Haul 4,Maurolicus muelleri,93.166,>90%,100,1.973894123,Fishing
+Haul 4,Melanogrammus aeglefinus,0,0,0,0,Fishing
+Haul 4,Micromesistius poutassou,0,0,0,0,Fishing
+Haul 4,Nansenia groenlandica,0.059,<1%,1,0.02489596,Fishing
+Haul 4,Normichthys operosus,0,0,0,0,Fishing
+Haul 4,Phycis blennoides,0,0,0,0,Fishing
+Haul 4,Protomyctophum arcticum,0,0,0,0,Fishing
+Haul 4,Scomber scombrus,0,0,0,0,Fishing
+Haul 4,Solea spp.,0.15,<1%,1,0.06069784,Fishing
+Haul 4,Stomias boa,0,0,0,0,Fishing
+Haul 4,Trachurus trachurus,0.146,<1%,1,0.059184618,Fishing
+Haul 4,Xenodermichthys copei,0,0,0,0,Fishing
+Haul 4,Zeugopterus punctatus,0.041,<1%,1,0.01745073,Fishing
+H4A,Anguilla anguilla,0,0,0,0,eDNA
+H4A,Arctozenus risso,0,0,0,0,eDNA
+H4A,Argentina silus,0,0,0,0,eDNA
+H4A,Argentina sphyraena,0,0,0,0,eDNA
+H4A,Argentina spp.,0,0,0,0,eDNA
+H4A,Argyropelecus olfersii,0,0,0,0,eDNA
+H4A,Capros aper,19.2,10-50%,50,1.305351369,eDNA
+H4A,Cetorhinus maximus,0,0,0,0,eDNA
+H4A,Conger conger,0,0,0,0,eDNA
+H4A,Coryphoblennius galerita,0,0,0,0,eDNA
+H4A,Echiodon drummondii,0,0,0,0,eDNA
+H4A,Electrona risso,0,0,0,0,eDNA
+H4A,Gadiculus argenteus,0,0,0,0,eDNA
+H4A,Helicolenus dactylopterus,1.17,1-5%,5,0.336459734,eDNA
+H4A,Lampanyctus macdonaldi,0,0,0,0,eDNA
+H4A,Lepidorhombus whiffiagonis,0,0,0,0,eDNA
+H4A,Macroparalepis affinis,0,0,0,0,eDNA
+H4A,Maurolicus muelleri,76.15,50-90%,90,1.88733593,eDNA
+H4A,Melanogrammus aeglefinus,0.12,<1%,1,0.049218023,eDNA
+H4A,Micromesistius poutassou,0,0,0,0,eDNA
+H4A,Nansenia groenlandica,0,0,0,0,eDNA
+H4A,Normichthys operosus,0,0,0,0,eDNA
+H4A,Phycis blennoides,0,0,0,0,eDNA
+H4A,Protomyctophum arcticum,0,0,0,0,eDNA
+H4A,Scomber scombrus,0.67,<1%,1,0.222716471,eDNA
+H4A,Solea spp.,0,0,0,0,eDNA
+H4A,Stomias boa,0,0,0,0,eDNA
+H4A,Trachurus trachurus,0,0,0,0,eDNA
+H4A,Xenodermichthys copei,0,0,0,0,eDNA
+H4A,Zeugopterus punctatus,0,0,0,0,eDNA
+H6B,Anguilla anguilla,0,0,0,0,eDNA
+H6B,Arctozenus risso,0,0,0,0,eDNA
+H6B,Argentina silus,0,0,0,0,eDNA
+H6B,Argentina sphyraena,0,0,0,0,eDNA
+H6B,Argentina spp.,0,0,0,0,eDNA
+H6B,Argyropelecus olfersii,0,0,0,0,eDNA
+H6B,Capros aper,0.01,<1%,1,0.004321374,eDNA
+H6B,Cetorhinus maximus,0,0,0,0,eDNA
+H6B,Conger conger,0,0,0,0,eDNA
+H6B,Coryphoblennius galerita,0,0,0,0,eDNA
+H6B,Echiodon drummondii,0,0,0,0,eDNA
+H6B,Electrona risso,0,0,0,0,eDNA
+H6B,Gadiculus argenteus,0,0,0,0,eDNA
+H6B,Helicolenus dactylopterus,0,0,0,0,eDNA
+H6B,Lampanyctus macdonaldi,0.72,<1%,1,0.235528447,eDNA
+H6B,Lepidorhombus whiffiagonis,0,0,0,0,eDNA
+H6B,Macroparalepis affinis,0,0,0,0,eDNA
+H6B,Maurolicus muelleri,97.74,>90%,100,1.994493123,eDNA
+H6B,Melanogrammus aeglefinus,0,0,0,0,eDNA
+H6B,Micromesistius poutassou,0,0,0,0,eDNA
+H6B,Nansenia groenlandica,0,0,0,0,eDNA
+H6B,Normichthys operosus,0,0,0,0,eDNA
+H6B,Phycis blennoides,0,0,0,0,eDNA
+H6B,Protomyctophum arcticum,0,0,0,0,eDNA
+H6B,Scomber scombrus,0,0,0,0,eDNA
+H6B,Solea spp.,0,0,0,0,eDNA
+H6B,Stomias boa,0,0,0,0,eDNA
+H6B,Trachurus trachurus,0,0,0,0,eDNA
+H6B,Xenodermichthys copei,0,0,0,0,eDNA
+H6B,Zeugopterus punctatus,0,0,0,0,eDNA
+Haul 6,Anguilla anguilla,0.641,<1%,1,0.215108581,Fishing
+Haul 6,Arctozenus risso,0.245,<1%,1,0.095169351,Fishing
+Haul 6,Argentina silus,0,0,0,0,Fishing
+Haul 6,Argentina sphyraena,0,0,0,0,Fishing
+Haul 6,Argentina spp.,0,0,0,0,Fishing
+Haul 6,Argyropelecus olfersii,0.731,<1%,1,0.238297068,Fishing
+Haul 6,Capros aper,0,0,0,0,Fishing
+Haul 6,Cetorhinus maximus,0,0,0,0,Fishing
+Haul 6,Conger conger,1.026,1-5%,5,0.306639441,Fishing
+Haul 6,Coryphoblennius galerita,0,0,0,0,Fishing
+Haul 6,Echiodon drummondii,0.014,<1%,1,0.006037955,Fishing
+Haul 6,Electrona risso,0.013,<1%,1,0.005609445,Fishing
+Haul 6,Gadiculus argenteus,0,0,0,0,Fishing
+Haul 6,Helicolenus dactylopterus,0,0,0,0,Fishing
+Haul 6,Lampanyctus macdonaldi,0,0,0,0,Fishing
+Haul 6,Lepidorhombus whiffiagonis,0,0,0,0,Fishing
+Haul 6,Macroparalepis affinis,3.079,1-5%,5,0.610553705,Fishing
+Haul 6,Maurolicus muelleri,94.131,>90%,100,1.978322062,Fishing
+Haul 6,Melanogrammus aeglefinus,0,0,0,0,Fishing
+Haul 6,Micromesistius poutassou,0,0,0,0,Fishing
+Haul 6,Nansenia groenlandica,0.119,<1%,1,0.048830087,Fishing
+Haul 6,Normichthys operosus,0,0,0,0,Fishing
+Haul 6,Phycis blennoides,0,0,0,0,Fishing
+Haul 6,Protomyctophum arcticum,0,0,0,0,Fishing
+Haul 6,Scomber scombrus,0,0,0,0,Fishing
+Haul 6,Solea spp.,0,0,0,0,Fishing
+Haul 6,Stomias boa,0,0,0,0,Fishing
+Haul 6,Trachurus trachurus,0,0,0,0,Fishing
+Haul 6,Xenodermichthys copei,0,0,0,0,Fishing
+Haul 6,Zeugopterus punctatus,0,0,0,0,Fishing
+H7B,Anguilla anguilla,0,0,0,0,eDNA
+H7B,Arctozenus risso,0,0,0,0,eDNA
+H7B,Argentina silus,0,0,0,0,eDNA
+H7B,Argentina sphyraena,0,0,0,0,eDNA
+H7B,Argentina spp.,0,0,0,0,eDNA
+H7B,Argyropelecus olfersii,0,0,0,0,eDNA
+H7B,Capros aper,0.06,<1%,1,0.025305865,eDNA
+H7B,Cetorhinus maximus,0,0,0,0,eDNA
+H7B,Conger conger,0,0,0,0,eDNA
+H7B,Coryphoblennius galerita,0,0,0,0,eDNA
+H7B,Echiodon drummondii,0,0,0,0,eDNA
+H7B,Electrona risso,0,0,0,0,eDNA
+H7B,Gadiculus argenteus,0,0,0,0,eDNA
+H7B,Helicolenus dactylopterus,0.04,<1%,1,0.017033339,eDNA
+H7B,Lampanyctus macdonaldi,0,0,0,0,eDNA
+H7B,Lepidorhombus whiffiagonis,0,0,0,0,eDNA
+H7B,Macroparalepis affinis,0,0,0,0,eDNA
+H7B,Maurolicus muelleri,0.67,<1%,1,0.222716471,eDNA
+H7B,Melanogrammus aeglefinus,0,0,0,0,eDNA
+H7B,Micromesistius poutassou,0,0,0,0,eDNA
+H7B,Nansenia groenlandica,0,0,0,0,eDNA
+H7B,Normichthys operosus,0,0,0,0,eDNA
+H7B,Phycis blennoides,0,0,0,0,eDNA
+H7B,Protomyctophum arcticum,0,0,0,0,eDNA
+H7B,Scomber scombrus,0,0,0,0,eDNA
+H7B,Solea spp.,0,0,0,0,eDNA
+H7B,Stomias boa,0,0,0,0,eDNA
+H7B,Trachurus trachurus,0,0,0,0,eDNA
+H7B,Xenodermichthys copei,0,0,0,0,eDNA
+H7B,Zeugopterus punctatus,0,0,0,0,eDNA
+Haul 7,Anguilla anguilla,0,0,0,0,Fishing
+Haul 7,Arctozenus risso,0.261,<1%,1,0.100715087,Fishing
+Haul 7,Argentina silus,0,0,0,0,Fishing
+Haul 7,Argentina sphyraena,0,0,0,0,Fishing
+Haul 7,Argentina spp.,0,0,0,0,Fishing
+Haul 7,Argyropelecus olfersii,0.85,<1%,1,0.267171728,Fishing
+Haul 7,Capros aper,0,0,0,0,Fishing
+Haul 7,Cetorhinus maximus,0,0,0,0,Fishing
+Haul 7,Conger conger,0,0,0,0,Fishing
+Haul 7,Coryphoblennius galerita,0,0,0,0,Fishing
+Haul 7,Echiodon drummondii,0.034,<1%,1,0.014520539,Fishing
+Haul 7,Electrona risso,0,0,0,0,Fishing
+Haul 7,Gadiculus argenteus,0,0,0,0,Fishing
+Haul 7,Helicolenus dactylopterus,0.068,<1%,1,0.028571253,Fishing
+Haul 7,Lampanyctus macdonaldi,0,0,0,0,Fishing
+Haul 7,Lepidorhombus whiffiagonis,0,0,0,0,Fishing
+Haul 7,Macroparalepis affinis,0.045,<1%,1,0.01911629,Fishing
+Haul 7,Maurolicus muelleri,96.061,>90%,100,1.987044761,Fishing
+Haul 7,Melanogrammus aeglefinus,0,0,0,0,Fishing
+Haul 7,Micromesistius poutassou,0,0,0,0,Fishing
+Haul 7,Nansenia groenlandica,2.131,1-5%,5,0.495683068,Fishing
+Haul 7,Normichthys operosus,0,0,0,0,Fishing
+Haul 7,Phycis blennoides,0,0,0,0,Fishing
+Haul 7,Protomyctophum arcticum,0.55,<1%,1,0.190331698,Fishing
+Haul 7,Scomber scombrus,0,0,0,0,Fishing
+Haul 7,Solea spp.,0,0,0,0,Fishing
+Haul 7,Stomias boa,0,0,0,0,Fishing
+Haul 7,Trachurus trachurus,0,0,0,0,Fishing
+Haul 7,Xenodermichthys copei,0,0,0,0,Fishing
+Haul 7,Zeugopterus punctatus,0,0,0,0,Fishing

@@ -1,0 +1,232 @@
+﻿library,species,relative_abundance
+H1B,Arctozenus risso,0
+H1B,Argentina silus,0
+H1B,Argentina sphyraena,0
+H1B,Capros aper,0.01
+H1B,Cetorhinus maximus,0
+H1B,Coryphoblennius galerita,0
+H1B,Echiodon drummondii,0
+H1B,Helicolenus dactylopterus,0.01
+H1B,Lampanyctus macdonaldi,0
+H1B,Lepidorhombus whiffiagonis,0
+H1B,Maurolicus muelleri,97.47
+H1B,Melanogrammus aeglefinus,0
+H1B,Micromesistius poutassou,0
+H1B,Normichthys operosus,0
+H1B,Phycis blennoides,0
+H1B,Protomyctophum arcticum,0.22
+H1B,Scomber scombrus,0
+H1B,Stomias boa,0
+H1B,Xenodermichthys copei,0
+H1B,Unassigned,0.5
+H1B,Unassigned to species,1.79
+H1A,Arctozenus risso,0
+H1A,Argentina silus,0
+H1A,Argentina sphyraena,0
+H1A,Capros aper,0.01
+H1A,Cetorhinus maximus,0
+H1A,Coryphoblennius galerita,0
+H1A,Echiodon drummondii,0
+H1A,Helicolenus dactylopterus,0
+H1A,Lampanyctus macdonaldi,0
+H1A,Lepidorhombus whiffiagonis,0
+H1A,Maurolicus muelleri,97.67
+H1A,Melanogrammus aeglefinus,0
+H1A,Micromesistius poutassou,0
+H1A,Normichthys operosus,0
+H1A,Phycis blennoides,0
+H1A,Protomyctophum arcticum,0
+H1A,Scomber scombrus,0
+H1A,Stomias boa,0.01
+H1A,Xenodermichthys copei,0
+H1A,Unassigned,0.28
+H1A,Unassigned to species,2.03
+H2B,Arctozenus risso,0
+H2B,Argentina silus,0
+H2B,Argentina sphyraena,0
+H2B,Capros aper,0.01
+H2B,Cetorhinus maximus,0
+H2B,Coryphoblennius galerita,0
+H2B,Echiodon drummondii,0
+H2B,Helicolenus dactylopterus,0
+H2B,Lampanyctus macdonaldi,0
+H2B,Lepidorhombus whiffiagonis,0
+H2B,Maurolicus muelleri,70.45
+H2B,Melanogrammus aeglefinus,0
+H2B,Micromesistius poutassou,0
+H2B,Normichthys operosus,2.74
+H2B,Phycis blennoides,0
+H2B,Protomyctophum arcticum,0
+H2B,Scomber scombrus,0
+H2B,Stomias boa,0
+H2B,Xenodermichthys copei,0
+H2B,Unassigned,23.97
+H2B,Unassigned to species,2.82
+H2A,Arctozenus risso,0.38
+H2A,Argentina silus,0
+H2A,Argentina sphyraena,0
+H2A,Capros aper,0.01
+H2A,Cetorhinus maximus,0
+H2A,Coryphoblennius galerita,0
+H2A,Echiodon drummondii,0
+H2A,Helicolenus dactylopterus,0.25
+H2A,Lampanyctus macdonaldi,0
+H2A,Lepidorhombus whiffiagonis,0
+H2A,Maurolicus muelleri,95.47
+H2A,Melanogrammus aeglefinus,0
+H2A,Micromesistius poutassou,0
+H2A,Normichthys operosus,0
+H2A,Phycis blennoides,0
+H2A,Protomyctophum arcticum,0
+H2A,Scomber scombrus,0
+H2A,Stomias boa,0
+H2A,Xenodermichthys copei,0
+H2A,Unassigned,2.75
+H2A,Unassigned to species,1.14
+H3B,Arctozenus risso,0
+H3B,Argentina silus,0
+H3B,Argentina sphyraena,0
+H3B,Capros aper,0.03
+H3B,Cetorhinus maximus,0
+H3B,Coryphoblennius galerita,0
+H3B,Echiodon drummondii,0
+H3B,Helicolenus dactylopterus,0.02
+H3B,Lampanyctus macdonaldi,0
+H3B,Lepidorhombus whiffiagonis,0
+H3B,Maurolicus muelleri,63.43
+H3B,Melanogrammus aeglefinus,0
+H3B,Micromesistius poutassou,0
+H3B,Normichthys operosus,0
+H3B,Phycis blennoides,8.38
+H3B,Protomyctophum arcticum,0
+H3B,Scomber scombrus,0
+H3B,Stomias boa,0
+H3B,Xenodermichthys copei,20.42
+H3B,Unassigned,4.52
+H3B,Unassigned to species,3.21
+H3A,Arctozenus risso,0
+H3A,Argentina silus,0
+H3A,Argentina sphyraena,0
+H3A,Capros aper,0.01
+H3A,Cetorhinus maximus,0
+H3A,Coryphoblennius galerita,0
+H3A,Echiodon drummondii,0
+H3A,Helicolenus dactylopterus,0
+H3A,Lampanyctus macdonaldi,0
+H3A,Lepidorhombus whiffiagonis,0
+H3A,Maurolicus muelleri,97.22
+H3A,Melanogrammus aeglefinus,0
+H3A,Micromesistius poutassou,0.01
+H3A,Normichthys operosus,0
+H3A,Phycis blennoides,0.57
+H3A,Protomyctophum arcticum,0
+H3A,Scomber scombrus,0
+H3A,Stomias boa,0
+H3A,Xenodermichthys copei,0.6
+H3A,Unassigned,0.5
+H3A,Unassigned to species,1.09
+H4B,Arctozenus risso,0
+H4B,Argentina silus,0.05
+H4B,Argentina sphyraena,0
+H4B,Capros aper,37.5
+H4B,Cetorhinus maximus,0
+H4B,Coryphoblennius galerita,0.14
+H4B,Echiodon drummondii,1.68
+H4B,Helicolenus dactylopterus,0.84
+H4B,Lampanyctus macdonaldi,0
+H4B,Lepidorhombus whiffiagonis,0
+H4B,Maurolicus muelleri,56.78
+H4B,Melanogrammus aeglefinus,0
+H4B,Micromesistius poutassou,0
+H4B,Normichthys operosus,0
+H4B,Phycis blennoides,0
+H4B,Protomyctophum arcticum,0
+H4B,Scomber scombrus,0
+H4B,Stomias boa,0
+H4B,Xenodermichthys copei,0
+H4B,Unassigned,1.21
+H4B,Unassigned to species,1.79
+H4A,Arctozenus risso,0
+H4A,Argentina silus,0
+H4A,Argentina sphyraena,0
+H4A,Capros aper,19.2
+H4A,Cetorhinus maximus,0
+H4A,Coryphoblennius galerita,0
+H4A,Echiodon drummondii,0
+H4A,Helicolenus dactylopterus,1.17
+H4A,Lampanyctus macdonaldi,0
+H4A,Lepidorhombus whiffiagonis,0
+H4A,Maurolicus muelleri,76.15
+H4A,Melanogrammus aeglefinus,0.12
+H4A,Micromesistius poutassou,0
+H4A,Normichthys operosus,0
+H4A,Phycis blennoides,0
+H4A,Protomyctophum arcticum,0
+H4A,Scomber scombrus,0.67
+H4A,Stomias boa,0
+H4A,Xenodermichthys copei,0
+H4A,Unassigned,0.61
+H4A,Unassigned to species,2.07
+H6B,Arctozenus risso,0
+H6B,Argentina silus,0
+H6B,Argentina sphyraena,0
+H6B,Capros aper,0.01
+H6B,Cetorhinus maximus,0
+H6B,Coryphoblennius galerita,0
+H6B,Echiodon drummondii,0
+H6B,Helicolenus dactylopterus,0
+H6B,Lampanyctus macdonaldi,0.72
+H6B,Lepidorhombus whiffiagonis,0
+H6B,Maurolicus muelleri,97.74
+H6B,Melanogrammus aeglefinus,0
+H6B,Micromesistius poutassou,0
+H6B,Normichthys operosus,0
+H6B,Phycis blennoides,0
+H6B,Protomyctophum arcticum,0
+H6B,Scomber scombrus,0
+H6B,Stomias boa,0
+H6B,Xenodermichthys copei,0
+H6B,Unassigned,0.4
+H6B,Unassigned to species,1.13
+H7B,Arctozenus risso,0
+H7B,Argentina silus,0
+H7B,Argentina sphyraena,0
+H7B,Capros aper,0.06
+H7B,Cetorhinus maximus,0
+H7B,Coryphoblennius galerita,0
+H7B,Echiodon drummondii,0
+H7B,Helicolenus dactylopterus,0.04
+H7B,Lampanyctus macdonaldi,0
+H7B,Lepidorhombus whiffiagonis,0
+H7B,Maurolicus muelleri,0.67
+H7B,Melanogrammus aeglefinus,0
+H7B,Micromesistius poutassou,0
+H7B,Normichthys operosus,0
+H7B,Phycis blennoides,0
+H7B,Protomyctophum arcticum,0
+H7B,Scomber scombrus,0
+H7B,Stomias boa,0
+H7B,Xenodermichthys copei,0
+H7B,Unassigned,94.34
+H7B,Unassigned to species,4.89
+CTD11,Arctozenus risso,0
+CTD11,Argentina silus,2.83
+CTD11,Argentina sphyraena,0.23
+CTD11,Capros aper,0.01
+CTD11,Cetorhinus maximus,7.92
+CTD11,Coryphoblennius galerita,0
+CTD11,Echiodon drummondii,0
+CTD11,Helicolenus dactylopterus,47.33
+CTD11,Lampanyctus macdonaldi,0
+CTD11,Lepidorhombus whiffiagonis,0.07
+CTD11,Maurolicus muelleri,32.51
+CTD11,Melanogrammus aeglefinus,0
+CTD11,Micromesistius poutassou,0.76
+CTD11,Normichthys operosus,0
+CTD11,Phycis blennoides,0.01
+CTD11,Protomyctophum arcticum,0
+CTD11,Scomber scombrus,0
+CTD11,Stomias boa,0
+CTD11,Xenodermichthys copei,0
+CTD11,Unassigned,1.33
+CTD11,Unassigned to species,7
