@@ -9,7 +9,7 @@ guppy_barcoder --input_path /path/to/folder/with/fastq/files --save_path /path/t
 grep -c runid ./filename.fastq
 
 #2. REMOVE PRIMERS USING CUTADAPT
-#In the cutadapt command, include the forward primer as is and the rverse complement of the reverse primer
+#In the cutadapt command, include the forward primer as is and the reverse complement of the reverse primer
 #Remove primers from the original sequencing files
 cutadapt --cores 8 --untrimmed-output untrimmed.fastq -e 0.1 -a F-primer...RC-R-primer barcode01.fastq -o trimmed-outputs.fastq
 #Create reverse complements of all the sequences that remain untrimmed in untrimmed.fastq
